@@ -1,3 +1,4 @@
+# VERSION: 3.1 — sidebar fix, social links, correct maps link
 import streamlit as st
 import json
 import re
@@ -207,6 +208,31 @@ header {visibility: hidden;}
     font-size: 0.85rem;
     margin-top: 0.5rem;
     font-weight: 600;
+}
+
+/* ── SIDEBAR OPEN/CLOSE BUTTONS — large and visible ── */
+[data-testid="stSidebarCollapseButton"] {
+    background: #8B3A62 !important;
+    border-radius: 50% !important;
+    border: 2px solid #f8bbd0 !important;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3) !important;
+}
+[data-testid="stSidebarCollapseButton"] svg {
+    fill: white !important; stroke: white !important;
+}
+[data-testid="stSidebarOpenButton"] {
+    background: #8B3A62 !important;
+    border-radius: 50% !important;
+    border: 2px solid #f8bbd0 !important;
+    box-shadow: 2px 2px 10px rgba(139,58,98,0.5) !important;
+    position: fixed !important;
+    left: 0.5rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 9999 !important;
+}
+[data-testid="stSidebarOpenButton"] svg {
+    fill: white !important; stroke: white !important;
 }
 
 /* ── WHATSAPP BUTTON ── */
