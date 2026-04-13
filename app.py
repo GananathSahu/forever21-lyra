@@ -258,7 +258,7 @@ def get_gemini_client():
 # ── Google Sheets ───────────────────────────────────────────────────────────────
 def save_lead_to_sheet(name: str, phone: str):
     try:
-        sa_info = json.loads(st.secrets["GCP_SERVICE_ACCOUNT"])
+        sa_info = dict(st.secrets["gcp_service_account"])
         creds = Credentials.from_service_account_info(
             sa_info,
             scopes=["https://www.googleapis.com/auth/spreadsheets"]
