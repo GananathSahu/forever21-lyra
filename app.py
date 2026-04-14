@@ -1,4 +1,4 @@
-# VERSION: 6.6 — Fix hours 9-9, remove estimator, bold vivanta, fix quick chips
+# VERSION: 6.7 — Logo cache fix, remove closed notice, bold phone, location first, bold text
 import streamlit as st
 import re
 import base64
@@ -228,7 +228,6 @@ def load_system_prompt():
     except FileNotFoundError:
         return "You are Lyra, a helpful beauty consultant for Forever 21 Beauty Studio."
 
-@st.cache_data
 def load_logo():
     try:
         with open("forever21_logo.png", "rb") as f:
@@ -311,22 +310,6 @@ if FESTIVAL_BANNER:
     st.markdown(f"<div class='festival-banner'>🎉 {FESTIVAL_BANNER}</div>",
                 unsafe_allow_html=True)
 
-# ── Studio closed day notice ──
-from datetime import datetime as _dt
-_today = _dt.now()
-_day = _today.weekday()  # 0=Mon, 6=Sun
-_hour = _dt.now().hour
-# Show notice if outside working hours
-if _hour < 9 or _hour >= 21:
-    st.markdown(
-        "<div style='background:#fff3e0; border-left:4px solid #e65100; "
-        "border-radius:8px; padding:0.5rem 1rem; margin-bottom:0.5rem; "
-        "font-size:0.83rem; color:#bf360c;'>"
-        "🕐 <strong>Studio is currently closed.</strong> "
-        "Open every day 9 AM–9 PM. "
-        "Leave a message and Bini Didi will call you back!</div>",
-        unsafe_allow_html=True
-    )
 
 n1, n2, n3, n4 = st.columns([2.2, 1, 1, 1])
 with n2:
@@ -355,14 +338,10 @@ if st.session_state.page == "chat":
         logo_b64 = load_logo()
         if logo_b64:
             st.markdown(
-                f"<div style='text-align:center; padding:0.5rem 0 0.4rem 0;'>"
-                f"<div style='display:inline-block; background:white;"
-                f"border-radius:12px; padding:0.6rem 0.8rem;"
-                f"border:3px solid #C2185B;"
-                f"box-shadow:0 3px 10px rgba(194,24,91,0.25);'>"
+                f"<div style='text-align:center; padding:0.3rem 0 0.5rem 0;'>"
                 f"<img src='data:image/png;base64,{logo_b64}' "
-                f"style='max-width:150px; display:block;'/>"
-                f"</div></div>",
+                f"style='max-width:180px; display:block; margin:0 auto;'/>" 
+                f"</div>",
                 unsafe_allow_html=True
             )
         else:
@@ -378,8 +357,8 @@ if st.session_state.page == "chat":
 
         # ── Find Us ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📍 Find Us</span>", unsafe_allow_html=True)
-        st.write("Lane-3, Kalinga Vihar (K9A)")
-        st.write("Bhubaneswar – 751019, Odisha")
+        st.markdown("**Lane-3, Kalinga Vihar (K9A)**")
+        st.markdown("**Bhubaneswar – 751019, Odisha**")
         st.markdown("<b>Near Vivanta Hotel & D N Regalia Mall</b>", unsafe_allow_html=True)
         st.markdown(
             "<a href='https://maps.app.goo.gl/B7oszYnEmBxMxLVe8' target='_blank' "
@@ -393,9 +372,16 @@ if st.session_state.page == "chat":
 
         # ── Contact ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📞 Contact Us</span>", unsafe_allow_html=True)
-        st.link_button("📱 +91 98531 15511",
-                       "tel:+919853115511",
-                       use_container_width=True)
+        st.markdown(
+            "<div style='text-align:center; background:#C2185B; "
+            "color:white; border-radius:10px; padding:0.5rem; "
+            "font-weight:900; font-size:1rem; letter-spacing:1px; "
+            "margin:0.3rem 0;'>"
+            "<a href='tel:+919853115511' "
+            "style='color:white; text-decoration:none;'>"
+            "📱 +91 98531 15511</a></div>",
+            unsafe_allow_html=True
+        )
         wa_messages = {
             "General Enquiry": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.",
             "Book Appointment": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20book%20an%20appointment.",
@@ -419,11 +405,11 @@ if st.session_state.page == "chat":
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         with c1:
-            st.caption("Every Day")
+            st.markdown("**Every Day**")
         with c2:
-            st.caption("9 AM – 9 PM")
-        st.caption("Early opening & late closing possible with prior appointment.")
-        st.caption("* Confirm timings while booking")
+            st.markdown("**9 AM – 9 PM**")
+        st.markdown("**Early opening & late closing** possible with prior appointment.", unsafe_allow_html=False)
+        st.markdown("* Confirm timings while booking")
 
         st.divider()
 
@@ -493,10 +479,10 @@ if st.session_state.page == "chat":
         )
         qcols = st.columns(4)
         quick_qs = [
+            ("📍 Location", "Where is Forever 21 Beauty Studio located? Lane-3, Kalinga Vihar (K9A), Bhubaneswar – 751019, Odisha, Near Vivanta Hotel & D N Regalia Mall. What are your working hours?"),
             ("💄 Bridal", "Tell me about bridal packages at Forever 21 Beauty Studio"),
             ("✨ Facials", "What facial treatments do you offer?"),
             ("💇 Hair", "What hair treatments are available?"),
-            ("📍 Location", "Where are you located and what are your working hours?"),
         ]
         if "chip_question" not in st.session_state:
             st.session_state.chip_question = None
