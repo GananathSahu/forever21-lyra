@@ -1,4 +1,4 @@
-# VERSION: 3.1 — sidebar fix, social links, correct maps link
+# VERSION: 3.2 — sidebar CSS selector fix for Streamlit 1.55
 import streamlit as st
 import json
 import re
@@ -143,11 +143,14 @@ header {visibility: hidden;}
 }
 
 /* ── SIDEBAR ── */
-[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #2d1b2e 0%, #4a1942 100%);
-    color: white;
+[data-testid="stSidebar"],
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #2d1b2e 0%, #4a1942 100%) !important;
+    color: white !important;
+    min-width: 240px !important;
 }
-[data-testid="stSidebar"] * { color: white !important; }
+[data-testid="stSidebar"] *,
+section[data-testid="stSidebar"] * { color: white !important; }
 
 .sidebar-section {
     background: rgba(255,255,255,0.07);
