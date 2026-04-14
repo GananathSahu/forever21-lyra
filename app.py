@@ -1,4 +1,4 @@
-# VERSION: 6.5 — 7 new features: tagline in chat, logo bg, maps pink, estimator, WA prefill, closed notice, quick chips
+# VERSION: 6.6 — Fix hours 9-9, remove estimator, bold vivanta, fix quick chips
 import streamlit as st
 import re
 import base64
@@ -317,13 +317,13 @@ _today = _dt.now()
 _day = _today.weekday()  # 0=Mon, 6=Sun
 _hour = _dt.now().hour
 # Show notice if outside working hours
-if _hour < 10 or (_day < 6 and _hour >= 20) or (_day == 6 and _hour >= 18):
+if _hour < 9 or _hour >= 21:
     st.markdown(
         "<div style='background:#fff3e0; border-left:4px solid #e65100; "
         "border-radius:8px; padding:0.5rem 1rem; margin-bottom:0.5rem; "
         "font-size:0.83rem; color:#bf360c;'>"
         "🕐 <strong>Studio is currently closed.</strong> "
-        "Mon–Sat: 10 AM–8 PM | Sunday: 10 AM–6 PM. "
+        "Open every day 9 AM–9 PM. "
         "Leave a message and Bini Didi will call you back!</div>",
         unsafe_allow_html=True
     )
@@ -380,7 +380,7 @@ if st.session_state.page == "chat":
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📍 Find Us</span>", unsafe_allow_html=True)
         st.write("Lane-3, Kalinga Vihar (K9A)")
         st.write("Bhubaneswar – 751019, Odisha")
-        st.caption("Near Vivanta Hotel & D N Regalia Mall")
+        st.markdown("<b>Near Vivanta Hotel & D N Regalia Mall</b>", unsafe_allow_html=True)
         st.markdown(
             "<a href='https://maps.app.goo.gl/B7oszYnEmBxMxLVe8' target='_blank' "
             "style='display:block; text-align:center; background:#C2185B; color:white; "
@@ -419,11 +419,10 @@ if st.session_state.page == "chat":
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         with c1:
-            st.caption("Mon – Sat")
-            st.caption("Sunday")
+            st.caption("Every Day")
         with c2:
-            st.caption("10 AM – 8 PM")
-            st.caption("10 AM – 6 PM")
+            st.caption("9 AM – 9 PM")
+        st.caption("Early opening & late closing possible with prior appointment.")
         st.caption("* Confirm timings while booking")
 
         st.divider()
@@ -499,46 +498,14 @@ if st.session_state.page == "chat":
             ("💇 Hair", "What hair treatments are available?"),
             ("📍 Location", "Where are you located and what are your working hours?"),
         ]
+        if "chip_question" not in st.session_state:
+            st.session_state.chip_question = None
         for i, (label, question) in enumerate(quick_qs):
             with qcols[i]:
                 if st.button(label, use_container_width=True, key=f"qchip_{i}"):
-                    st.session_state.messages.append(
-                        {"role": "user", "content": question})
-                    st.session_state.lead_saved = False
+                    st.session_state.chip_question = question
                     st.rerun()
 
-        # ── Appointment Time Estimator ──
-        with st.expander("⏰ How long will my visit take? — Time Estimator"):
-            st.markdown(
-                "<span style='color:#8B3A62; font-size:0.83rem;'>"
-                "Select services below to estimate your total visit time:</span>",
-                unsafe_allow_html=True
-            )
-            est_cats = st.multiselect(
-                "Choose service categories",
-                list(SERVICES_WITH_DURATION.keys()),
-                key="est_cats"
-            )
-            if est_cats:
-                total_mins = 0
-                details = []
-                for cat in est_cats:
-                    # Use minimum duration for that category
-                    min_dur = min(SERVICES_WITH_DURATION[cat].values())
-                    max_dur = max(SERVICES_WITH_DURATION[cat].values())
-                    avg_dur = sum(SERVICES_WITH_DURATION[cat].values()) // len(SERVICES_WITH_DURATION[cat])
-                    total_mins += avg_dur
-                    details.append(f"{cat}: ~{format_duration(avg_dur)}")
-                for d in details:
-                    st.caption(f"• {d}")
-                st.markdown(
-                    f"<div style='background:#C2185B; color:white; border-radius:10px; "
-                    f"padding:0.6rem 1rem; margin-top:0.5rem; font-weight:700; font-size:0.88rem;'>"
-                    f"⏱️ Estimated total: <strong>{format_duration(total_mins)}</strong><br>"
-                    f"<span style='font-size:0.78rem; font-weight:400; opacity:0.9;'>"
-                    f"We recommend booking a prior appointment with Bini Didi.</span></div>",
-                    unsafe_allow_html=True
-                )
 
         # ── Service Explorer ──
         with st.expander("💅 Explore Our Services & Time Required"):
@@ -564,6 +531,9 @@ if st.session_state.page == "chat":
 
         # Chat
         user_input = st.chat_input("💬 Type your message here and press Enter…")
+        if st.session_state.get("chip_question"):
+            user_input = st.session_state.chip_question
+            st.session_state.chip_question = None
 
         for msg in st.session_state.messages:
             with st.chat_message(msg["role"]):
