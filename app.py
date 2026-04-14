@@ -1,4 +1,4 @@
-# VERSION: 6.1 — Prominent expander CSS, guaranteed visibility
+# VERSION: 6.2 — Native Streamlit widgets only for left panel
 import streamlit as st
 import re
 import base64
@@ -332,152 +332,83 @@ if st.session_state.page == "chat":
 
     # ── LEFT PANEL — pure Streamlit widgets ──────────────────────────
     with left:
-        # Dark background container via markdown
-        st.markdown("""
-        <div style='background:linear-gradient(180deg,#2d1b2e,#4a1942);
-             border-radius:14px; padding:0.8rem 0.75rem; min-height:650px;'>
-        """, unsafe_allow_html=True)
-
-        # Logo
+        # ── Logo ──
+        logo_b64 = load_logo()
         if logo_b64:
-            st.markdown(f"""
-            <div style='text-align:center; padding-bottom:0.7rem;
-                 border-bottom:1px solid rgba(255,255,255,0.15); margin-bottom:0.7rem;'>
-                <div style='background:white; border-radius:10px; padding:0.5rem 0.7rem;
-                     display:inline-block; border:2px solid rgba(248,187,208,0.5);'>
-                    <img src='data:image/png;base64,{logo_b64}'
-                         style='max-width:120px; display:block;'/>
-                </div>
-            </div>""", unsafe_allow_html=True)
+            st.markdown(
+                f"<div style='text-align:center; padding:0.5rem 0 0.3rem 0;'>"
+                f"<img src='data:image/png;base64,{logo_b64}' "
+                f"style='max-width:130px; border-radius:8px;'/></div>",
+                unsafe_allow_html=True
+            )
         else:
-            st.markdown("""
-            <div style='text-align:center; padding-bottom:0.7rem;
-                 border-bottom:1px solid rgba(255,255,255,0.15); margin-bottom:0.7rem;'>
-                <div style='font-size:2rem;'>💄</div>
-                <div style='font-family:Playfair Display,serif; color:#f8bbd0;
-                     font-size:1rem; font-weight:700;'>Forever 21</div>
-                <div style='color:#e0b0c8; font-size:0.7rem; letter-spacing:1px;
-                     text-transform:uppercase;'>Beauty Studio</div>
-            </div>""", unsafe_allow_html=True)
+            st.markdown(
+                "<div style='text-align:center; padding:0.3rem 0;'>"
+                "<span style='font-size:1.8rem;'>💄</span><br>"
+                "<strong>Forever 21</strong><br>"
+                "<small>Beauty Studio</small></div>",
+                unsafe_allow_html=True
+            )
 
-        # Find Us
-        st.markdown("""
-        <div style='background:rgba(255,255,255,0.07); border-radius:10px;
-             padding:0.6rem 0.7rem; margin-bottom:0.6rem;
-             border:1px solid rgba(255,255,255,0.1);'>
-            <div style='color:#f8bbd0; font-family:Playfair Display,serif;
-                 font-size:0.88rem; font-weight:600; margin-bottom:0.3rem;'>
-                📍 Find Us</div>
-            <div style='color:white; font-size:0.79rem; line-height:1.6;'>
-                Lane-3, Kalinga Vihar (K9A)<br>
-                Bhubaneswar – 751019, Odisha<br>
-                <span style='opacity:0.72; font-size:0.73rem;'>
-                Near Vivanta Hotel & D N Regalia Mall</span>
-            </div>
-            <a href='https://maps.app.goo.gl/B7oszYnEmBxMxLVe8' target='_blank'
-               style='display:inline-block; margin-top:0.4rem; background:rgba(255,255,255,0.12);
-               color:white; text-decoration:none; border-radius:20px;
-               padding:0.18rem 0.6rem; font-size:0.75rem;
-               border:1px solid rgba(255,255,255,0.2);'>🗺️ Open in Maps</a>
-        </div>""", unsafe_allow_html=True)
+        st.divider()
 
-        # Contact
-        st.markdown("""
-        <div style='background:rgba(255,255,255,0.07); border-radius:10px;
-             padding:0.6rem 0.7rem; margin-bottom:0.6rem;
-             border:1px solid rgba(255,255,255,0.1);'>
-            <div style='color:#f8bbd0; font-family:Playfair Display,serif;
-                 font-size:0.88rem; font-weight:600; margin-bottom:0.3rem;'>
-                📞 Contact Us</div>
-            <a href='tel:+919853115511'
-               style='display:inline-block; background:rgba(255,255,255,0.12);
-               color:white; text-decoration:none; border-radius:20px;
-               padding:0.18rem 0.6rem; font-size:0.75rem;
-               border:1px solid rgba(255,255,255,0.2);'>📱 +91 98531 15511</a>
-            <a href='https://wa.me/919853115511?text=Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.'
-               target='_blank'
-               style='display:flex; align-items:center; justify-content:center;
-               gap:0.4rem; background:#25D366; color:white; text-decoration:none;
-               border-radius:10px; padding:0.45rem; font-weight:700; font-size:0.82rem;
-               margin-top:0.45rem; box-shadow:0 2px 6px rgba(37,211,102,0.3);'>
-               💬 Chat on WhatsApp</a>
-        </div>""", unsafe_allow_html=True)
+        # ── Find Us ──
+        st.markdown("📍 **Find Us**")
+        st.write("Lane-3, Kalinga Vihar (K9A)")
+        st.write("Bhubaneswar – 751019, Odisha")
+        st.caption("Near Vivanta Hotel & D N Regalia Mall")
+        st.link_button("🗺️ Open in Maps",
+                       "https://maps.app.goo.gl/B7oszYnEmBxMxLVe8",
+                       use_container_width=True)
 
-        # Working Hours
-        st.markdown("""
-        <div style='background:rgba(255,255,255,0.07); border-radius:10px;
-             padding:0.6rem 0.7rem; margin-bottom:0.6rem;
-             border:1px solid rgba(255,255,255,0.1);'>
-            <div style='color:#f8bbd0; font-family:Playfair Display,serif;
-                 font-size:0.88rem; font-weight:600; margin-bottom:0.3rem;'>
-                🕐 Working Hours</div>
-            <div style='display:flex; justify-content:space-between;
-                 color:white; font-size:0.78rem; padding:0.15rem 0;
-                 border-bottom:1px solid rgba(255,255,255,0.07);'>
-                <span>Mon – Sat</span>
-                <span style='color:#f8bbd0; font-weight:600;'>10 AM – 8 PM</span>
-            </div>
-            <div style='display:flex; justify-content:space-between;
-                 color:white; font-size:0.78rem; padding:0.15rem 0;'>
-                <span>Sunday</span>
-                <span style='color:#f8bbd0; font-weight:600;'>10 AM – 6 PM</span>
-            </div>
-            <div style='color:rgba(255,255,255,0.5); font-size:0.68rem; margin-top:0.3rem;'>
-                * Confirm timings while booking</div>
-        </div>""", unsafe_allow_html=True)
+        st.divider()
 
-        # Services chips
-        chips = "".join([
-            f"<span style='display:inline-block; background:rgba(255,255,255,0.1);"
-            f"border-radius:20px; padding:0.12rem 0.5rem; font-size:0.7rem;"
-            f"margin:0.07rem; border:1px solid rgba(255,255,255,0.15); color:white;'>"
-            f"{s}</span>"
-            for s in SERVICES_WITH_DURATION.keys()
-        ])
-        st.markdown(f"""
-        <div style='background:rgba(255,255,255,0.07); border-radius:10px;
-             padding:0.6rem 0.7rem; margin-bottom:0.6rem;
-             border:1px solid rgba(255,255,255,0.1);'>
-            <div style='color:#f8bbd0; font-family:Playfair Display,serif;
-                 font-size:0.88rem; font-weight:600; margin-bottom:0.35rem;'>
-                💅 Our Services</div>
-            {chips}
-        </div>""", unsafe_allow_html=True)
+        # ── Contact ──
+        st.markdown("📞 **Contact Us**")
+        st.link_button("📱 +91 98531 15511",
+                       "tel:+919853115511",
+                       use_container_width=True)
+        st.link_button("💬 Chat on WhatsApp",
+                       "https://wa.me/919853115511?text=Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.",
+                       use_container_width=True)
 
-        # Social Links
-        st.markdown("""
-        <div style='background:rgba(255,255,255,0.07); border-radius:10px;
-             padding:0.6rem 0.7rem; margin-bottom:0.6rem;
-             border:1px solid rgba(255,255,255,0.1);'>
-            <div style='color:#f8bbd0; font-family:Playfair Display,serif;
-                 font-size:0.88rem; font-weight:600; margin-bottom:0.35rem;'>
-                🌐 Follow & Review Us</div>
-            <a href='https://www.instagram.com/forever_21_beauty_studio?igsh=MWwxenQ0cHI1YmlidQ=='
-               target='_blank'
-               style='display:inline-block; background:rgba(255,255,255,0.12);
-               color:white; text-decoration:none; border-radius:20px;
-               padding:0.18rem 0.6rem; margin:0.1rem; font-size:0.75rem;
-               border:1px solid rgba(255,255,255,0.2);'>📸 Instagram</a>
-            <a href='https://www.facebook.com/share/17J8yCJafA/' target='_blank'
-               style='display:inline-block; background:rgba(255,255,255,0.12);
-               color:white; text-decoration:none; border-radius:20px;
-               padding:0.18rem 0.6rem; margin:0.1rem; font-size:0.75rem;
-               border:1px solid rgba(255,255,255,0.2);'>👍 Facebook</a>
-            <a href='https://share.google/nZogQL8Y5usCwPmWy' target='_blank'
-               style='display:inline-block; background:rgba(255,255,255,0.12);
-               color:white; text-decoration:none; border-radius:20px;
-               padding:0.18rem 0.6rem; margin:0.1rem; font-size:0.75rem;
-               border:1px solid rgba(255,255,255,0.2);'>⭐ Google</a>
-        </div>""", unsafe_allow_html=True)
+        st.divider()
 
-        # Tagline
-        st.markdown("""
-        <div style='text-align:center; padding:0.5rem 0 0.2rem 0;
-             font-family:Playfair Display,serif; font-style:italic;
-             font-size:0.75rem; color:#f8bbd0; opacity:0.6; letter-spacing:0.3px;'>
-            "Always Young, Always Beautiful."
-        </div>
-        </div>""", unsafe_allow_html=True)
+        # ── Working Hours ──
+        st.markdown("🕐 **Working Hours**")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.caption("Mon – Sat")
+            st.caption("Sunday")
+        with c2:
+            st.caption("10 AM – 8 PM")
+            st.caption("10 AM – 6 PM")
+        st.caption("* Confirm timings while booking")
+
+        st.divider()
+
+        # ── Services ──
+        st.markdown("💅 **Our Services**")
+        svc_names = list(SERVICES_WITH_DURATION.keys())
+        st.caption(" · ".join(svc_names[:10]))
+        st.caption(" · ".join(svc_names[10:]))
+
+        st.divider()
+
+        # ── Social Links ──
+        st.markdown("🌐 **Follow & Review Us**")
+        st.link_button("📸 Instagram",
+                       "https://www.instagram.com/forever_21_beauty_studio?igsh=MWwxenQ0cHI1YmlidQ==",
+                       use_container_width=True)
+        st.link_button("👍 Facebook",
+                       "https://www.facebook.com/share/17J8yCJafA/",
+                       use_container_width=True)
+        st.link_button("⭐ Google Review",
+                       "https://share.google/nZogQL8Y5usCwPmWy",
+                       use_container_width=True)
+
+        st.divider()
+        st.caption('"Always Young, Always Beautiful." 🌸')
 
     # ── RIGHT COLUMN ─────────────────────────────────────────────────
     with right:
