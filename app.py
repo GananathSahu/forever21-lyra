@@ -1,5 +1,6 @@
-# VERSION: 5.0 — Duration Planner, Admin Dashboard, Gallery, UI improvements
+# VERSION: 5.1 — Fix left panel HTML rendering via components.html
 import streamlit as st
+import streamlit.components.v1 as components
 import re
 import base64
 import hashlib
@@ -502,7 +503,7 @@ if st.session_state.page == "chat":
     left_col, right_col = st.columns([1, 2.4])
 
     with left_col:
-        st.markdown(build_left_panel(logo_src), unsafe_allow_html=True)
+        components.html(build_left_panel(logo_src), height=900, scrolling=True)
 
     with right_col:
         # Header
