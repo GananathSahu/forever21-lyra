@@ -1,4 +1,4 @@
-# VERSION: 6.4 — Tagline pink bold everywhere
+# VERSION: 6.5 — 7 new features: tagline in chat, logo bg, maps pink, estimator, WA prefill, closed notice, quick chips
 import streamlit as st
 import re
 import base64
@@ -311,6 +311,23 @@ if FESTIVAL_BANNER:
     st.markdown(f"<div class='festival-banner'>🎉 {FESTIVAL_BANNER}</div>",
                 unsafe_allow_html=True)
 
+# ── Studio closed day notice ──
+from datetime import datetime as _dt
+_today = _dt.now()
+_day = _today.weekday()  # 0=Mon, 6=Sun
+_hour = _dt.now().hour
+# Show notice if outside working hours
+if _hour < 10 or (_day < 6 and _hour >= 20) or (_day == 6 and _hour >= 18):
+    st.markdown(
+        "<div style='background:#fff3e0; border-left:4px solid #e65100; "
+        "border-radius:8px; padding:0.5rem 1rem; margin-bottom:0.5rem; "
+        "font-size:0.83rem; color:#bf360c;'>"
+        "🕐 <strong>Studio is currently closed.</strong> "
+        "Mon–Sat: 10 AM–8 PM | Sunday: 10 AM–6 PM. "
+        "Leave a message and Bini Didi will call you back!</div>",
+        unsafe_allow_html=True
+    )
+
 n1, n2, n3, n4 = st.columns([2.2, 1, 1, 1])
 with n2:
     if st.button("💬 Chat", use_container_width=True):
@@ -364,9 +381,13 @@ if st.session_state.page == "chat":
         st.write("Lane-3, Kalinga Vihar (K9A)")
         st.write("Bhubaneswar – 751019, Odisha")
         st.caption("Near Vivanta Hotel & D N Regalia Mall")
-        st.link_button("🗺️ Open in Maps",
-                       "https://maps.app.goo.gl/B7oszYnEmBxMxLVe8",
-                       use_container_width=True)
+        st.markdown(
+            "<a href='https://maps.app.goo.gl/B7oszYnEmBxMxLVe8' target='_blank' "
+            "style='display:block; text-align:center; background:#C2185B; color:white; "
+            "font-weight:700; font-size:0.85rem; padding:0.45rem; border-radius:8px; "
+            "text-decoration:none; margin-top:0.3rem;'>🗺️ Open in Maps</a>",
+            unsafe_allow_html=True
+        )
 
         st.divider()
 
@@ -375,9 +396,22 @@ if st.session_state.page == "chat":
         st.link_button("📱 +91 98531 15511",
                        "tel:+919853115511",
                        use_container_width=True)
-        st.link_button("💬 Chat on WhatsApp",
-                       "https://wa.me/919853115511?text=Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.",
-                       use_container_width=True)
+        wa_messages = {
+            "General Enquiry": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.",
+            "Book Appointment": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20book%20an%20appointment.",
+            "Bridal Package": "Namaskar%20Bini%20Didi!%20I%20am%20interested%20in%20a%20Bridal%20Package.",
+            "Hair Treatment": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20about%20Hair%20Treatments.",
+        }
+        wa_choice = st.selectbox("💬 WhatsApp Bini Didi about:",
+                                  list(wa_messages.keys()), key="wa_topic")
+        st.markdown(
+            f"<a href='https://wa.me/919853115511?text={wa_messages[wa_choice]}' "
+            f"target='_blank' style='display:block; text-align:center; background:#25D366; "
+            f"color:white; font-weight:700; font-size:0.85rem; padding:0.45rem; "
+            f"border-radius:8px; text-decoration:none; margin-top:0.2rem;'>"
+            f"💬 Open WhatsApp</a>",
+            unsafe_allow_html=True
+        )
 
         st.divider()
 
@@ -451,6 +485,61 @@ if st.session_state.page == "chat":
             </div>
         </div>""", unsafe_allow_html=True)
 
+        # ── Quick Question Chips ──
+        st.markdown(
+            "<div style='margin-bottom:0.5rem;'>"
+            "<span style='color:#8B3A62; font-size:0.78rem; font-weight:700;'>"
+            "💡 Quick questions — tap to ask Lyra:</span></div>",
+            unsafe_allow_html=True
+        )
+        qcols = st.columns(4)
+        quick_qs = [
+            ("💄 Bridal", "Tell me about bridal packages at Forever 21 Beauty Studio"),
+            ("✨ Facials", "What facial treatments do you offer?"),
+            ("💇 Hair", "What hair treatments are available?"),
+            ("📍 Location", "Where are you located and what are your working hours?"),
+        ]
+        for i, (label, question) in enumerate(quick_qs):
+            with qcols[i]:
+                if st.button(label, use_container_width=True, key=f"qchip_{i}"):
+                    st.session_state.messages.append(
+                        {"role": "user", "content": question})
+                    st.session_state.lead_saved = False
+                    st.rerun()
+
+        # ── Appointment Time Estimator ──
+        with st.expander("⏰ How long will my visit take? — Time Estimator"):
+            st.markdown(
+                "<span style='color:#8B3A62; font-size:0.83rem;'>"
+                "Select services below to estimate your total visit time:</span>",
+                unsafe_allow_html=True
+            )
+            est_cats = st.multiselect(
+                "Choose service categories",
+                list(SERVICES_WITH_DURATION.keys()),
+                key="est_cats"
+            )
+            if est_cats:
+                total_mins = 0
+                details = []
+                for cat in est_cats:
+                    # Use minimum duration for that category
+                    min_dur = min(SERVICES_WITH_DURATION[cat].values())
+                    max_dur = max(SERVICES_WITH_DURATION[cat].values())
+                    avg_dur = sum(SERVICES_WITH_DURATION[cat].values()) // len(SERVICES_WITH_DURATION[cat])
+                    total_mins += avg_dur
+                    details.append(f"{cat}: ~{format_duration(avg_dur)}")
+                for d in details:
+                    st.caption(f"• {d}")
+                st.markdown(
+                    f"<div style='background:#C2185B; color:white; border-radius:10px; "
+                    f"padding:0.6rem 1rem; margin-top:0.5rem; font-weight:700; font-size:0.88rem;'>"
+                    f"⏱️ Estimated total: <strong>{format_duration(total_mins)}</strong><br>"
+                    f"<span style='font-size:0.78rem; font-weight:400; opacity:0.9;'>"
+                    f"We recommend booking a prior appointment with Bini Didi.</span></div>",
+                    unsafe_allow_html=True
+                )
+
         # ── Service Explorer ──
         with st.expander("💅 Explore Our Services & Time Required"):
             cat_choice = st.selectbox(
@@ -488,7 +577,17 @@ if st.session_state.page == "chat":
                 with st.spinner("Lyra is thinking…"):
                     raw = chat_with_lyra(st.session_state.messages, system_prompt)
                 display_text, lead_name, lead_phone = extract_lead(raw)
-                st.markdown(display_text)
+                # Make tagline pink bold in Lyra's responses
+                styled = display_text.replace(
+                    "Always Young and Always Beautiful",
+                    "<span style='color:#C2185B; font-weight:700; font-style:italic;'>"
+                    "Always Young and Always Beautiful</span>"
+                ).replace(
+                    "Always Young, Always Beautiful",
+                    "<span style='color:#C2185B; font-weight:700; font-style:italic;'>"
+                    "Always Young, Always Beautiful</span>"
+                )
+                st.markdown(styled, unsafe_allow_html=True)
                 if lead_name and lead_phone and not st.session_state.lead_saved:
                     if save_lead_to_sheet(lead_name, lead_phone):
                         st.session_state.lead_saved = True
