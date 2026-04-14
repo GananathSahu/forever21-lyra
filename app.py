@@ -1,4 +1,4 @@
-# VERSION: 7.1 — Nav tabs type-based colouring, active page highlighted
+# VERSION: 7.2 — Nav tabs white with pink border, clean contrast
 import streamlit as st
 import re
 import base64
@@ -111,33 +111,21 @@ header {visibility: hidden;}
     white-space: nowrap;
 }
 
-/* ── NAV TABS — key-based targeting ── */
-button[kind="secondary"][data-testid="stBaseButton-secondary"] {
-    font-weight: 700 !important;
-    border-radius: 8px !important;
-}
-div:has(> div > button[key="nav_chat"]) button,
-[data-testid="stButton"]:has(button[key="nav_chat"]) button {
-    background-color: #C2185B !important;
-    color: white !important;
-}
 
-/* ── NAV: Active page button uses primary (rose) ── */
-.stButton button[kind="primary"] {
-    background: #C2185B !important;
-    color: white !important;
+
+/* ── NAV BUTTON STYLING ── */
+/* Style all nav buttons with good contrast */
+div[data-testid="stButton"] button[kind="secondary"] {
     font-weight: 700 !important;
-    border: none !important;
+    font-size: 0.88rem !important;
+    border-radius: 10px !important;
+    border: 2px solid #C2185B !important;
+    color: #8B3A62 !important;
+    background: white !important;
+    transition: all 0.2s !important;
 }
-/* ── NAV: Gallery inactive ── */
-button[data-testid="stBaseButton-secondary"][key="nav_gallery"] {
-    background: #6d1f4a !important;
-    color: white !important;
-}
-/* ── NAV: Dashboard ── */
-button[key="nav_admin"] {
-    background: #333333 !important;
-    color: white !important;
+div[data-testid="stButton"] button[kind="secondary"]:hover {
+    background: #fce4ec !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -349,26 +337,20 @@ if FESTIVAL_BANNER:
                 unsafe_allow_html=True)
 
 
+# ── Navigation — styled buttons ──
+_page = st.session_state.page
 n1, n2, n3, n4 = st.columns([2.2, 1, 1, 1])
 with n2:
-    # Pink chat button
-    st.markdown("""
-    <style>
-    div[data-testid="stButton"]:has(button[data-testid="stBaseButton-secondary"]:nth-child(1)) button { background:#C2185B !important; }
-    </style>""", unsafe_allow_html=True)
-    chat_active = st.session_state.page == "chat"
-    if st.button("💬 Chat", use_container_width=True, key="nav_chat",
-                 type="primary" if chat_active else "secondary"):
+    _chat_style = "background:#C2185B; color:white;" if _page=="chat" else "background:#f8d7e3; color:#8B3A62;"
+    if st.button("💬  Chat", use_container_width=True, key="nav_chat"):
         st.session_state.page = "chat"; st.rerun()
 with n3:
-    gal_active = st.session_state.page == "gallery"
-    if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery",
-                 type="primary" if gal_active else "secondary"):
+    _gal_style = "background:#6d1f4a; color:white;" if _page=="gallery" else "background:#e8d5e8; color:#6d1f4a;"
+    if st.button("🖼️  Gallery", use_container_width=True, key="nav_gallery"):
         st.session_state.page = "gallery"; st.rerun()
 with n4:
-    adm_active = st.session_state.page == "admin"
-    if st.button("🔐 Dashboard", use_container_width=True, key="nav_admin",
-                 type="secondary"):
+    _adm_style = "background:#333333; color:white;" if _page=="admin" else "background:#e0e0e0; color:#333333;"
+    if st.button("🔐  Dashboard", use_container_width=True, key="nav_admin"):
         st.session_state.page = "admin"; st.rerun()
 
 st.markdown("<hr style='margin:0.3rem 0 0.6rem 0; border-color:rgba(139,58,98,0.2);'>",
