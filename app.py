@@ -1,4 +1,4 @@
-# VERSION: 7.0 — Coloured nav tabs, legal disclaimer, gallery disclaimer
+# VERSION: 7.1 — Nav tabs type-based colouring, active page highlighted
 import streamlit as st
 import re
 import base64
@@ -111,27 +111,33 @@ header {visibility: hidden;}
     white-space: nowrap;
 }
 
-/* ── NAV TABS ── */
-div[data-testid="column"]:nth-child(2) button {
+/* ── NAV TABS — key-based targeting ── */
+button[kind="secondary"][data-testid="stBaseButton-secondary"] {
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+}
+div:has(> div > button[key="nav_chat"]) button,
+[data-testid="stButton"]:has(button[key="nav_chat"]) button {
     background-color: #C2185B !important;
     color: white !important;
-    font-weight: 700 !important;
-    border: none !important;
-    border-radius: 8px !important;
 }
-div[data-testid="column"]:nth-child(3) button {
-    background-color: #6d1f4a !important;
+
+/* ── NAV: Active page button uses primary (rose) ── */
+.stButton button[kind="primary"] {
+    background: #C2185B !important;
     color: white !important;
     font-weight: 700 !important;
     border: none !important;
-    border-radius: 8px !important;
 }
-div[data-testid="column"]:nth-child(4) button {
-    background-color: #333333 !important;
+/* ── NAV: Gallery inactive ── */
+button[data-testid="stBaseButton-secondary"][key="nav_gallery"] {
+    background: #6d1f4a !important;
     color: white !important;
-    font-weight: 700 !important;
-    border: none !important;
-    border-radius: 8px !important;
+}
+/* ── NAV: Dashboard ── */
+button[key="nav_admin"] {
+    background: #333333 !important;
+    color: white !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -345,13 +351,24 @@ if FESTIVAL_BANNER:
 
 n1, n2, n3, n4 = st.columns([2.2, 1, 1, 1])
 with n2:
-    if st.button("💬 Chat", use_container_width=True):
+    # Pink chat button
+    st.markdown("""
+    <style>
+    div[data-testid="stButton"]:has(button[data-testid="stBaseButton-secondary"]:nth-child(1)) button { background:#C2185B !important; }
+    </style>""", unsafe_allow_html=True)
+    chat_active = st.session_state.page == "chat"
+    if st.button("💬 Chat", use_container_width=True, key="nav_chat",
+                 type="primary" if chat_active else "secondary"):
         st.session_state.page = "chat"; st.rerun()
 with n3:
-    if st.button("🖼️ Gallery", use_container_width=True):
+    gal_active = st.session_state.page == "gallery"
+    if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery",
+                 type="primary" if gal_active else "secondary"):
         st.session_state.page = "gallery"; st.rerun()
 with n4:
-    if st.button("🔐 Dashboard", use_container_width=True):
+    adm_active = st.session_state.page == "admin"
+    if st.button("🔐 Dashboard", use_container_width=True, key="nav_admin",
+                 type="secondary"):
         st.session_state.page = "admin"; st.rerun()
 
 st.markdown("<hr style='margin:0.3rem 0 0.6rem 0; border-color:rgba(139,58,98,0.2);'>",
