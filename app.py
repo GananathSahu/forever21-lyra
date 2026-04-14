@@ -1,4 +1,4 @@
-# VERSION: 6.9 — Gallery KeyError fix, correct hours in location chip
+# VERSION: 7.0 — Coloured nav tabs, legal disclaimer, gallery disclaimer
 import streamlit as st
 import re
 import base64
@@ -109,6 +109,29 @@ header {visibility: hidden;}
     background: #8B3A62; color: white; border-radius: 12px;
     padding: 0.1rem 0.6rem; font-size: 0.72rem; font-weight: 600;
     white-space: nowrap;
+}
+
+/* ── NAV TABS ── */
+div[data-testid="column"]:nth-child(2) button {
+    background-color: #C2185B !important;
+    color: white !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+}
+div[data-testid="column"]:nth-child(3) button {
+    background-color: #6d1f4a !important;
+    color: white !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+}
+div[data-testid="column"]:nth-child(4) button {
+    background-color: #333333 !important;
+    color: white !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -576,6 +599,26 @@ if st.session_state.page == "chat":
                 st.session_state.lead_saved = False
                 st.rerun()
 
+        # ── Disclaimer ──
+        st.markdown(
+            "<div style='margin-top:1.5rem; padding:0.7rem 1rem; "
+            "background:#f9f9f9; border-radius:10px; "
+            "border-left:3px solid #C2185B; font-size:0.72rem; "
+            "color:#666; line-height:1.6;'>"
+            "<strong style='color:#8B3A62;'>📋 Disclaimer:</strong> "
+            "Lyra is an AI-powered virtual assistant for Forever 21 Beauty Studio. "
+            "The information provided is for general guidance only and may not always "
+            "be complete or fully up to date. For confirmed pricing, appointment "
+            "availability, and personalised recommendations, please speak directly "
+            "with Bini Didi at "
+            "<a href='tel:+919853115511' style='color:#C2185B;'>+91 98531 15511</a>."
+            "<br><br>"
+            "Your name and phone number shared in this chat are used solely to enable "
+            "Forever 21 Beauty Studio to contact you. We do not share your personal "
+            "details with any third party.</div>",
+            unsafe_allow_html=True
+        )
+
 # ══════════════════════════════════════════════════════════════════════
 # PAGE: GALLERY
 # ══════════════════════════════════════════════════════════════════════
@@ -623,6 +666,17 @@ elif st.session_state.page == "gallery":
             st.markdown(f"**{item['label']}**")
             st.caption(item["description"])
 
+    # Disclaimer on gallery
+    st.markdown(
+        "<div style='margin-top:1rem; padding:0.6rem 1rem; "
+        "background:#f9f9f9; border-radius:8px; "
+        "border-left:3px solid #C2185B; font-size:0.7rem; color:#666;'>"
+        "<strong style='color:#8B3A62;'>📋 Disclaimer:</strong> "
+        "Images shown are for illustrative purposes. "
+        "Actual results may vary based on individual skin and hair type. "
+        "Lyra is an AI assistant — for personalised advice please contact Bini Didi.</div>",
+        unsafe_allow_html=True
+    )
     st.markdown("""
     <div style='text-align:center; margin-top:1.5rem; padding:1rem;
          background:#fce4ec; border-radius:12px;'>
