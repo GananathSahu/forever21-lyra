@@ -1,4 +1,4 @@
-# VERSION: 7.4 — Nav tabs: pink/plum/charcoal with gold active border
+# VERSION: 7.5 — Simple reliable nav, tagline bold in system prompt
 import streamlit as st
 import re
 import base64
@@ -337,61 +337,19 @@ if FESTIVAL_BANNER:
                 unsafe_allow_html=True)
 
 
-# ── Navigation — coloured tabs ──
+# ── Navigation ──
 _page = st.session_state.page
-
-# Inject per-button CSS using key-based targeting
-_active_border = "outline: 3px solid #FFD700 !important; outline-offset: 2px !important;"
-_chat_css = f"""
-<style>
-div[data-testid="stButton"] button[kind="primary"] {{
-    background: #C2185B !important;
-    color: white !important;
-    font-weight: 800 !important;
-    border-radius: 10px !important;
-    border: none !important;
-    font-size: 0.9rem !important;
-    letter-spacing: 0.3px !important;
-}}
-div[data-testid="stButton"] button[kind="secondary"] {{
-    font-weight: 700 !important;
-    border-radius: 10px !important;
-    font-size: 0.9rem !important;
-    letter-spacing: 0.3px !important;
-}}
-/* Gallery button - 3rd column */
-div[data-testid="column"]:nth-of-type(3) button {{
-    background: #6d1f4a !important;
-    color: white !important;
-    border: none !important;
-}}
-/* Dashboard button - 4th column */
-div[data-testid="column"]:nth-of-type(4) button {{
-    background: #2d2d2d !important;
-    color: white !important;
-    border: none !important;
-}}
-/* Active page gets gold border */
-div[data-testid="column"]:nth-of-type(2) button[kind="primary"],
-div[data-testid="column"]:nth-of-type(3) button[kind="primary"],
-div[data-testid="column"]:nth-of-type(4) button[kind="primary"] {{
-    {_active_border}
-}}
-</style>
-"""
-st.markdown(_chat_css, unsafe_allow_html=True)
-
 n1, n2, n3, n4 = st.columns([2.2, 1, 1, 1])
 with n2:
-    if st.button("💬  Chat", use_container_width=True, key="nav_chat",
+    if st.button("💬 Chat", use_container_width=True, key="nav_chat",
                  type="primary" if _page=="chat" else "secondary"):
         st.session_state.page = "chat"; st.rerun()
 with n3:
-    if st.button("🖼️  Gallery", use_container_width=True, key="nav_gallery",
+    if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery",
                  type="primary" if _page=="gallery" else "secondary"):
         st.session_state.page = "gallery"; st.rerun()
 with n4:
-    if st.button("🔐  Dashboard", use_container_width=True, key="nav_admin",
+    if st.button("🔐 Dashboard", use_container_width=True, key="nav_admin",
                  type="primary" if _page=="admin" else "secondary"):
         st.session_state.page = "admin"; st.rerun()
 
