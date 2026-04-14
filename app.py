@@ -1,4 +1,4 @@
-# VERSION: 6.8 — Gallery photos, bold services, hours fix, chat input position, system prompt
+# VERSION: 6.9 — Gallery KeyError fix, correct hours in location chip
 import streamlit as st
 import re
 import base64
@@ -498,7 +498,7 @@ if st.session_state.page == "chat":
         )
         qcols = st.columns(4)
         quick_qs = [
-            ("📍 Location", "Where is Forever 21 Beauty Studio located? Lane-3, Kalinga Vihar (K9A), Bhubaneswar – 751019, Odisha, Near Vivanta Hotel & D N Regalia Mall. What are your working hours?"),
+            ("📍 Location", "Where is Forever 21 Beauty Studio located? The address is Lane-3, Kalinga Vihar (K9A), Bhubaneswar – 751019, Odisha, Near Vivanta Hotel & D N Regalia Mall. Working hours are Every Day 9 AM to 9 PM."),
             ("💄 Bridal", "Tell me about bridal packages at Forever 21 Beauty Studio"),
             ("✨ Facials", "What facial treatments do you offer?"),
             ("💇 Hair", "What hair treatments are available?"),
@@ -596,10 +596,11 @@ elif st.session_state.page == "gallery":
     cols = st.columns(3)
     for i, item in enumerate(items):
         with cols[i % 3]:
-            if item["youtube"]:
+            if item.get("youtube",""):
                 st.markdown(
-                    f"<iframe width='100%' height='180' src='{item['youtube']}'"
-                    f" frameborder='0' allowfullscreen></iframe>",
+                    f"<iframe width='100%' height='180' "
+                    f"src='{item.get("youtube","")}' "
+                    f"frameborder='0' allowfullscreen></iframe>",
                     unsafe_allow_html=True
                 )
             else:
