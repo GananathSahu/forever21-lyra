@@ -1,4 +1,4 @@
-# VERSION: 5.2 — Remove planner, fix tagline, chips with duration, address, language tabs
+# VERSION: 5.3 — Selectbox service explorer, no flag prefixes, verified
 import streamlit as st
 import streamlit.components.v1 as components
 import re
@@ -526,16 +526,16 @@ if st.session_state.page == "chat":
                      margin-bottom:0.3rem; text-transform:uppercase; letter-spacing:0.5px;'>
                     I speak your language:
                 </div>
-                <span class='lang-chip'>🇬🇧 English</span>
-                <span class='lang-chip'>🇮🇳 हिन्दी</span>
-                <span class='lang-chip'>🏝️ ଓଡ଼ିଆ</span>
+                <span class='lang-chip'>English</span>
+                <span class='lang-chip'>हिन्दी</span>
+                <span class='lang-chip'>ଓଡ଼ିଆ</span>
                 <div style='margin-top:0.35rem;'>
                     <span class='lang-chip' style='background:#6d1f4a;'>
-                        🇬🇧+🇮🇳 English–Hindi</span>
+                        English + हिन्दी</span>
                     <span class='lang-chip' style='background:#6d1f4a;'>
-                        🇬🇧+🏝️ English–Odia</span>
+                        English + ଓଡ଼ିଆ</span>
                     <span class='lang-chip' style='background:#4a0d33;'>
-                        🌐 All Three</span>
+                        All Three</span>
                 </div>
             </div>
         </div>""", unsafe_allow_html=True)
@@ -546,30 +546,38 @@ if st.session_state.page == "chat":
         with st.expander("💅 Explore Our Services & Time Required"):
             st.markdown(
                 "<div style='font-size:0.82rem; color:#8B3A62; font-weight:600;"
-                "margin-bottom:0.4rem;'>Tap any category to see services & duration:</div>",
+                "margin-bottom:0.4rem;'>Select a category to see all services and duration:</div>",
                 unsafe_allow_html=True
             )
-            for cat, services in SERVICES_WITH_DURATION.items():
-                with st.expander(f"✦ {cat}"):
-                    rows = ""
-                    for svc, dur in services.items():
-                        dur_str = f"{dur} min" if dur < 60 else (
-                            f"{dur//60}h" if dur % 60 == 0 else f"{dur//60}h {dur%60}min"
-                        )
-                        rows += (
-                            f"<div style='display:flex; justify-content:space-between;"
-                            f"padding:0.25rem 0.5rem; border-bottom:1px solid #fce4ec;"
-                            f"font-size:0.82rem; align-items:center;'>"
-                            f"<span style='color:#3a3a3a;'>{svc}</span>"
-                            f"<span style='background:#8B3A62; color:white; border-radius:12px;"
-                            f"padding:0.1rem 0.55rem; font-size:0.72rem; font-weight:600;'>"
-                            f"⏱ {dur_str}</span></div>"
-                        )
-                    st.markdown(
-                        f"<div style='border:1px solid #f8bbd0; border-radius:8px;"
-                        f"overflow:hidden;'>{rows}</div>",
-                        unsafe_allow_html=True
+            selected_cat = st.selectbox(
+                "Choose a service category",
+                ["— Select a category —"] + list(SERVICES_WITH_DURATION.keys()),
+                key="service_explorer_cat"
+            )
+            if selected_cat != "— Select a category —":
+                services = SERVICES_WITH_DURATION[selected_cat]
+                rows = ""
+                for svc, dur in services.items():
+                    dur_str = (
+                        f"{dur} min" if dur < 60
+                        else (f"{dur//60}h" if dur % 60 == 0
+                              else f"{dur//60}h {dur%60}min")
                     )
+                    rows += (
+                        f"<div style='display:flex; justify-content:space-between;"
+                        f"padding:0.3rem 0.7rem; border-bottom:1px solid #fce4ec;"
+                        f"font-size:0.83rem; align-items:center; background:white;'>"
+                        f"<span style='color:#3a3a3a;'>{svc}</span>"
+                        f"<span style='background:#8B3A62; color:white;"
+                        f"border-radius:12px; padding:0.1rem 0.6rem;"
+                        f"font-size:0.73rem; font-weight:600;'>"
+                        f"⏱ {dur_str}</span></div>"
+                    )
+                st.markdown(
+                    f"<div style='border:2px solid #f8bbd0; border-radius:10px;"
+                    f"overflow:hidden; margin-top:0.5rem;'>{rows}</div>",
+                    unsafe_allow_html=True
+                )
 
         # ── Chat ────────────────────────────────────────────────
 
