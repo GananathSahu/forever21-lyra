@@ -1,4 +1,4 @@
-# VERSION: 6.2 — Native Streamlit widgets only for left panel
+# VERSION: 6.4 — Tagline pink bold everywhere
 import streamlit as st
 import re
 import base64
@@ -53,6 +53,8 @@ header {visibility: hidden;}
     font-family: 'Playfair Display', serif;
     font-style: italic; font-weight: 700;
     color: #C2185B; letter-spacing: 0.3px;
+    font-size: 1rem;
+    text-shadow: 0 1px 2px rgba(194,24,91,0.15);
 }
 .lang-row { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.5rem; }
 .lchip {
@@ -336,9 +338,14 @@ if st.session_state.page == "chat":
         logo_b64 = load_logo()
         if logo_b64:
             st.markdown(
-                f"<div style='text-align:center; padding:0.5rem 0 0.3rem 0;'>"
+                f"<div style='text-align:center; padding:0.5rem 0 0.4rem 0;'>"
+                f"<div style='display:inline-block; background:white;"
+                f"border-radius:12px; padding:0.6rem 0.8rem;"
+                f"border:3px solid #C2185B;"
+                f"box-shadow:0 3px 10px rgba(194,24,91,0.25);'>"
                 f"<img src='data:image/png;base64,{logo_b64}' "
-                f"style='max-width:130px; border-radius:8px;'/></div>",
+                f"style='max-width:150px; display:block;'/>"
+                f"</div></div>",
                 unsafe_allow_html=True
             )
         else:
@@ -353,7 +360,7 @@ if st.session_state.page == "chat":
         st.divider()
 
         # ── Find Us ──
-        st.markdown("📍 **Find Us**")
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📍 Find Us</span>", unsafe_allow_html=True)
         st.write("Lane-3, Kalinga Vihar (K9A)")
         st.write("Bhubaneswar – 751019, Odisha")
         st.caption("Near Vivanta Hotel & D N Regalia Mall")
@@ -364,7 +371,7 @@ if st.session_state.page == "chat":
         st.divider()
 
         # ── Contact ──
-        st.markdown("📞 **Contact Us**")
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📞 Contact Us</span>", unsafe_allow_html=True)
         st.link_button("📱 +91 98531 15511",
                        "tel:+919853115511",
                        use_container_width=True)
@@ -375,7 +382,7 @@ if st.session_state.page == "chat":
         st.divider()
 
         # ── Working Hours ──
-        st.markdown("🕐 **Working Hours**")
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         with c1:
             st.caption("Mon – Sat")
@@ -388,7 +395,7 @@ if st.session_state.page == "chat":
         st.divider()
 
         # ── Services ──
-        st.markdown("💅 **Our Services**")
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>💅 Our Services</span>", unsafe_allow_html=True)
         svc_names = list(SERVICES_WITH_DURATION.keys())
         st.caption(" · ".join(svc_names[:10]))
         st.caption(" · ".join(svc_names[10:]))
@@ -396,7 +403,7 @@ if st.session_state.page == "chat":
         st.divider()
 
         # ── Social Links ──
-        st.markdown("🌐 **Follow & Review Us**")
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🌐 Follow & Review Us</span>", unsafe_allow_html=True)
         st.link_button("📸 Instagram",
                        "https://www.instagram.com/forever_21_beauty_studio?igsh=MWwxenQ0cHI1YmlidQ==",
                        use_container_width=True)
@@ -408,7 +415,13 @@ if st.session_state.page == "chat":
                        use_container_width=True)
 
         st.divider()
-        st.caption('"Always Young, Always Beautiful." 🌸')
+        st.markdown(
+            "<div style='text-align:center; padding:0.3rem 0;'>"
+            "<span style='color:#C2185B; font-weight:700; font-style:italic; font-size:0.85rem;'>"
+            "✨ Always Young, Always Beautiful. ✨"
+            "</span></div>",
+            unsafe_allow_html=True
+        )
 
     # ── RIGHT COLUMN ─────────────────────────────────────────────────
     with right:
