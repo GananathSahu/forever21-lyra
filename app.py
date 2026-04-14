@@ -1,4 +1,4 @@
-# VERSION: 6.0 — Pure Streamlit widgets only, guaranteed render
+# VERSION: 6.1 — Prominent expander CSS, guaranteed visibility
 import streamlit as st
 import re
 import base64
@@ -85,6 +85,18 @@ header {visibility: hidden;}
     border: 2.5px solid #C2185B !important;
     border-radius: 12px !important;
     box-shadow: 0 2px 12px rgba(194,24,91,0.15) !important;
+}
+/* ── Make service expander prominent ── */
+[data-testid="stExpander"] {
+    border: 2px solid #C2185B !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #fff9fb, #fce4ec) !important;
+    margin-bottom: 0.8rem !important;
+}
+[data-testid="stExpander"] summary {
+    font-weight: 700 !important;
+    color: #8B3A62 !important;
+    font-size: 0.95rem !important;
 }
 .svc-row {
     display:flex; justify-content:space-between; align-items:center;
