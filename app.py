@@ -1,4 +1,4 @@
-# VERSION: 5.1 — Fix left panel HTML rendering via components.html
+# VERSION: 5.2 — Remove planner, fix tagline, chips with duration, address, language tabs
 import streamlit as st
 import streamlit.components.v1 as components
 import re
@@ -56,12 +56,10 @@ header {visibility: hidden;}
 .tagline {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    background: linear-gradient(90deg, #f8bbd0, #e91e8c, #f8bbd0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 600;
+    color: #C2185B;
+    font-weight: 700;
     letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(194,24,91,0.25);
 }
 
 /* ── WELCOME BOX ── */
@@ -373,10 +371,11 @@ def build_left_panel(logo_src):
         logo_html = f"""
         <div style='text-align:center; padding-bottom:0.8rem;
              border-bottom:1px solid rgba(255,255,255,0.15); margin-bottom:0.8rem;'>
-            <div style='background:rgba(255,255,255,0.08); border-radius:10px;
-                 padding:0.5rem; display:inline-block;
-                 border:1px solid rgba(248,187,208,0.3);'>
-                <img src='{logo_src}' style='max-width:120px; border-radius:6px;
+            <div style='background:white; border-radius:10px;
+                 padding:0.6rem 0.8rem; display:inline-block;
+                 border:2px solid rgba(248,187,208,0.6);
+                 box-shadow:0 2px 8px rgba(0,0,0,0.2);'>
+                <img src='{logo_src}' style='max-width:120px; border-radius:4px;
                      display:block;'/>
             </div>
         </div>"""
@@ -410,7 +409,7 @@ def build_left_panel(logo_src):
                    border:1px solid rgba(255,255,255,0.2); {extra}'>{label}</a>"""
 
     location_body = f"""
-        <span style='color:white;'>MIG, Lane-3, Kalinga Vihar (K9A)<br>
+        <span style='color:white;'>Lane-3, Kalinga Vihar (K9A)<br>
         Bhubaneswar – 751019, Odisha<br>
         <span style='opacity:0.7; font-size:0.73rem;'>Near Vivanta Hotel & D N Regalia Mall</span></span><br>
         {link_btn('https://maps.app.goo.gl/B7oszYnEmBxMxLVe8', '🗺️ Open in Maps')}"""
@@ -522,64 +521,58 @@ if st.session_state.page == "chat":
             With Bini Didi, I'm here to help you remain
             <span class='tagline'>Always Young and Always Beautiful.</span><br><br>
             How can I help you to be a glowing beauty today?
-            <div style='margin-top:0.4rem;'>
+            <div style='margin-top:0.5rem;'>
+                <div style='font-size:0.75rem; color:#8B3A62; font-weight:700;
+                     margin-bottom:0.3rem; text-transform:uppercase; letter-spacing:0.5px;'>
+                    I speak your language:
+                </div>
                 <span class='lang-chip'>🇬🇧 English</span>
                 <span class='lang-chip'>🇮🇳 हिन्दी</span>
                 <span class='lang-chip'>🏝️ ଓଡ଼ିଆ</span>
+                <div style='margin-top:0.35rem;'>
+                    <span class='lang-chip' style='background:#6d1f4a;'>
+                        🇬🇧+🇮🇳 English–Hindi</span>
+                    <span class='lang-chip' style='background:#6d1f4a;'>
+                        🇬🇧+🏝️ English–Odia</span>
+                    <span class='lang-chip' style='background:#4a0d33;'>
+                        🌐 All Three</span>
+                </div>
             </div>
         </div>""", unsafe_allow_html=True)
 
-        # ── Service Duration Planner ────────────────────────────────
-        with st.expander("⏱️ How long will my visit take? — Service Duration Planner"):
-            st.markdown("<div class='planner-title'>Select your services and we'll estimate your visit time</div>",
-                        unsafe_allow_html=True)
 
-            selected_cat = st.selectbox(
-                "Choose a service category",
-                ["— Select —"] + list(SERVICES_WITH_DURATION.keys()),
-                key="planner_cat"
+
+        # ── Service Explorer ───────────────────────────────────────
+        with st.expander("💅 Explore Our Services & Time Required"):
+            st.markdown(
+                "<div style='font-size:0.82rem; color:#8B3A62; font-weight:600;"
+                "margin-bottom:0.4rem;'>Tap any category to see services & duration:</div>",
+                unsafe_allow_html=True
             )
+            for cat, services in SERVICES_WITH_DURATION.items():
+                with st.expander(f"✦ {cat}"):
+                    rows = ""
+                    for svc, dur in services.items():
+                        dur_str = f"{dur} min" if dur < 60 else (
+                            f"{dur//60}h" if dur % 60 == 0 else f"{dur//60}h {dur%60}min"
+                        )
+                        rows += (
+                            f"<div style='display:flex; justify-content:space-between;"
+                            f"padding:0.25rem 0.5rem; border-bottom:1px solid #fce4ec;"
+                            f"font-size:0.82rem; align-items:center;'>"
+                            f"<span style='color:#3a3a3a;'>{svc}</span>"
+                            f"<span style='background:#8B3A62; color:white; border-radius:12px;"
+                            f"padding:0.1rem 0.55rem; font-size:0.72rem; font-weight:600;'>"
+                            f"⏱ {dur_str}</span></div>"
+                        )
+                    st.markdown(
+                        f"<div style='border:1px solid #f8bbd0; border-radius:8px;"
+                        f"overflow:hidden;'>{rows}</div>",
+                        unsafe_allow_html=True
+                    )
 
-            if selected_cat != "— Select —":
-                services_in_cat = SERVICES_WITH_DURATION[selected_cat]
-                selected_services = st.multiselect(
-                    f"Choose from {selected_cat}",
-                    list(services_in_cat.keys()),
-                    key="planner_services"
-                )
+        # ── Chat ────────────────────────────────────────────────
 
-                if "planner_all_selected" not in st.session_state:
-                    st.session_state.planner_all_selected = []
-
-                if st.button("➕ Add to my list", key="add_service"):
-                    for s in selected_services:
-                        entry = f"{selected_cat} — {s}"
-                        if entry not in st.session_state.planner_all_selected:
-                            st.session_state.planner_all_selected.append(entry)
-
-            if st.session_state.get("planner_all_selected"):
-                st.markdown("**Your selected services:**")
-                total_mins = 0
-                for item in st.session_state.planner_all_selected:
-                    cat, svc = item.split(" — ", 1)
-                    dur = SERVICES_WITH_DURATION.get(cat, {}).get(svc, 30)
-                    total_mins += dur
-                    st.markdown(f"• {item} — *{format_duration(dur)}*")
-
-                st.markdown(f"""
-                <div class='duration-result'>
-                    ⏱️ Estimated total visit time: <strong>{format_duration(total_mins)}</strong><br>
-                    📅 We recommend a prior appointment — call or
-                    <a href='https://wa.me/919853115511' target='_blank'
-                       style='color:#a5d6a7; text-decoration:none;'>
-                       WhatsApp Bini Didi</a>
-                </div>""", unsafe_allow_html=True)
-
-                if st.button("🗑️ Clear list", key="clear_planner"):
-                    st.session_state.planner_all_selected = []
-                    st.rerun()
-
-        # ── Chat ────────────────────────────────────────────────────
         user_input = st.chat_input("💬 Type your message here and press Enter…")
 
         for msg in st.session_state.messages:
