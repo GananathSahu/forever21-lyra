@@ -131,7 +131,7 @@ div[data-testid="stButton"] button[kind="secondary"]:hover {
 """, unsafe_allow_html=True)
 
 # ── Config ─────────────────────────────────────────────────────────────────────
-FESTIVAL_BANNER = "🌸 Wedding Season Special — Book your Bridal Package now! Call Bini Didi: +91 98531 15511"
+FESTIVAL_BANNER = "👰✨ Hey Brides-to-Be! Jan–Apr slots are filling fast — very few left! Book your Bridal Package now! 💍🌸"
 ADMIN_PASSWORD_HASH = hashlib.sha256("Bini".encode()).hexdigest()
 
 # ── Service data ───────────────────────────────────────────────────────────────
