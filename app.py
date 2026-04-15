@@ -88,27 +88,6 @@ header {visibility: hidden;}
     color: white; border-radius: 10px; padding: 0.6rem 1rem;
     font-size: 0.85rem; margin-top: 0.5rem; font-weight: 600;
 }
-/* Compress all left panel spacing globally */
-[data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] .stButton,
-[data-testid="stSidebar"] .stSelectbox, [data-testid="stSidebar"] .stLinkButton {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-[data-testid="stSidebar"] p {
-    margin: 0 !important;
-    padding: 0 !important;
-    line-height: 1.3 !important;
-}
-/* Compress main page left column too */
-section[data-testid="column"]:first-child .stMarkdown p {
-    margin: 0 !important;
-    line-height: 1.3 !important;
-}
-section[data-testid="column"]:first-child .element-container {
-    margin-bottom: 0.1rem !important;
-}
 .stChatInput > div {
     border: 2.5px solid #C2185B !important;
     border-radius: 12px !important;
@@ -157,6 +136,17 @@ div[data-testid="stButton"] button[kind="secondary"]:hover {
 """, unsafe_allow_html=True)
 
 # ── Config ─────────────────────────────────────────────────────────────────────
+# ── Phone validation ───────────────────────────────────────────
+def is_valid_indian_mobile(phone: str) -> bool:
+    """Validate Indian mobile number: 10 digits, starts with 6/7/8/9."""
+    phone = phone.strip()
+    if phone.startswith("+91"):
+        phone = phone[3:].strip()
+    elif phone.startswith("91") and len(phone) == 12:
+        phone = phone[2:]
+    phone = re.sub(r"[\s\-]", "", phone)
+    return bool(re.match(r"^[6-9]\d{9}$", phone))
+
 FESTIVAL_BANNER = "👰✨ Hey Brides-to-Be! Jan–Apr slots are filling fast — very few left! Book your Bridal Package now! 💍🌸"
 ADMIN_PASSWORD_HASH = hashlib.sha256("Bini".encode()).hexdigest()
 
@@ -241,6 +231,13 @@ SERVICES_WITH_DURATION = {
     },
     "Piercing": {
         "Ear Piercing": 30, "Nose Piercing": 30, "Ear Lobing": 30
+    },
+    "Eye & Lash": {
+        "Eyelash Extension": 60
+    },
+    "Skin & Advanced": {
+        "Mole Removal": 30,
+        "Earlobe Repair": 45
     },
     "Saree Draping": {
         "Saree Draping": 30
@@ -621,7 +618,7 @@ if st.session_state.page == "chat":
                 )
                 st.markdown(styled, unsafe_allow_html=True)
                 if lead_name and lead_phone and not st.session_state.lead_saved:
-                    if save_lead_to_sheet(lead_name, lead_phone):
+                    if is_valid_indian_mobile(lead_phone) and save_lead_to_sheet(lead_name, lead_phone):
                         st.session_state.lead_saved = True
                         st.markdown(
                             f"<div class='lead-banner'>✅ Thank you, {lead_name}! "
