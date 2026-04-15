@@ -88,6 +88,27 @@ header {visibility: hidden;}
     color: white; border-radius: 10px; padding: 0.6rem 1rem;
     font-size: 0.85rem; margin-top: 0.5rem; font-weight: 600;
 }
+/* Compress all left panel spacing globally */
+[data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] .stButton,
+[data-testid="stSidebar"] .stSelectbox, [data-testid="stSidebar"] .stLinkButton {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+[data-testid="stSidebar"] p {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.3 !important;
+}
+/* Compress main page left column too */
+section[data-testid="column"]:first-child .stMarkdown p {
+    margin: 0 !important;
+    line-height: 1.3 !important;
+}
+section[data-testid="column"]:first-child .element-container {
+    margin-bottom: 0.1rem !important;
+}
 .stChatInput > div {
     border: 2.5px solid #C2185B !important;
     border-radius: 12px !important;
