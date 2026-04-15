@@ -399,7 +399,7 @@ if st.session_state.page == "chat":
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Find Us ──
-        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📍 Find Us</span>", unsafe_allow_html=True)
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>📍 Find Us</span>", unsafe_allow_html=True)
         st.markdown("**Lane-3, Kalinga Vihar (K9A)**")
         st.markdown("**Bhubaneswar – 751019, Odisha**")
         st.markdown("<b>Near Vivanta Hotel & D N Regalia Mall</b>", unsafe_allow_html=True)
@@ -414,7 +414,7 @@ if st.session_state.page == "chat":
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Contact ──
-        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📞 Contact Us</span>", unsafe_allow_html=True)
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>📞 Contact Us</span>", unsafe_allow_html=True)
         st.markdown(
             "<div style='text-align:center; background:#C2185B; "
             "color:white; border-radius:10px; padding:0.5rem; "
@@ -445,7 +445,7 @@ if st.session_state.page == "chat":
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Working Hours ──
-        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
         with c1:
             st.markdown("**Every Day**")
@@ -457,18 +457,25 @@ if st.session_state.page == "chat":
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Services ──
-        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>💅 Our Services</span>", unsafe_allow_html=True)
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>💅 Our Services</span>", unsafe_allow_html=True)
         svc_names = list(SERVICES_WITH_DURATION.keys())
-        # Display services as vertical list with emoji
-        st.markdown(
-            "<br>".join([f"🌸 **{s}**" for s in svc_names]),
-            unsafe_allow_html=True
-        )
+        # Display services as 2-column list with emoji
+        half = len(svc_names) // 2 + len(svc_names) % 2
+        col1 = svc_names[:half]
+        col2 = svc_names[half:]
+        rows = "".join([
+            f"<tr><td style='padding:1px 8px 1px 0;'>🌸 <b>{col1[i]}</b></td>"
+            f"<td style='padding:1px 0 1px 8px;'>🌸 <b>{col2[i]}</b></td></tr>"
+            if i < len(col2) else
+            f"<tr><td style='padding:1px 8px 1px 0;'>🌸 <b>{col1[i]}</b></td><td></td></tr>"
+            for i in range(len(col1))
+        ])
+        st.markdown(f"<table style='width:100%; font-size:0.82rem; border-collapse:collapse;'>{rows}</table>", unsafe_allow_html=True)
 
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Social Links ──
-        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🌐 Follow & Review Us</span>", unsafe_allow_html=True)
+        st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>🌐 Follow & Review Us</span>", unsafe_allow_html=True)
         st.link_button("📸 Instagram",
                        "https://www.instagram.com/forever_21_beauty_studio?igsh=MWwxenQ0cHI1YmlidQ==",
                        use_container_width=True)
