@@ -396,7 +396,7 @@ if st.session_state.page == "chat":
                 unsafe_allow_html=True
             )
 
-        st.divider()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Find Us ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📍 Find Us</span>", unsafe_allow_html=True)
@@ -411,7 +411,7 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
 
-        st.divider()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Contact ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>📞 Contact Us</span>", unsafe_allow_html=True)
@@ -442,7 +442,7 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
 
-        st.divider()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Working Hours ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
@@ -454,18 +454,18 @@ if st.session_state.page == "chat":
         st.markdown("**Early opening & late closing** possible with prior appointment.", unsafe_allow_html=False)
         st.markdown("_* Confirm timings while booking_")
 
-        st.divider()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Services ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>💅 Our Services</span>", unsafe_allow_html=True)
         svc_names = list(SERVICES_WITH_DURATION.keys())
-        # Display services as flowing text - no column wrapping
+        # Display services as vertical list with emoji
         st.markdown(
-            " &nbsp;·&nbsp; ".join([f"**{s}**" for s in svc_names]),
+            "<br>".join([f"🌸 **{s}**" for s in svc_names]),
             unsafe_allow_html=True
         )
 
-        st.divider()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Social Links ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>🌐 Follow & Review Us</span>", unsafe_allow_html=True)
@@ -479,7 +479,7 @@ if st.session_state.page == "chat":
                        "https://share.google/nZogQL8Y5usCwPmWy",
                        use_container_width=True)
 
-        st.divider()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
         st.markdown(
             "<div style='text-align:center; padding:0.3rem 0;'>"
             "<span style='color:#C2185B; font-weight:700; font-style:italic; font-size:0.85rem;'>"
