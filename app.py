@@ -583,8 +583,7 @@ if st.session_state.page == "chat":
                     raw = chat_with_lyra(st.session_state.messages, system_prompt)
                 display_text, lead_name, lead_phone = extract_lead(raw)
                 # Force correct Maps link - replace any Google Maps generated link
-                import re
-                display_text = re.sub(r'https?://(?:www\.)?(?:maps\.google\.com|google\.com/maps)[^\s'"<)]*', 'https://maps.app.goo.gl/B7oszYnEmBxMxLVe8', display_text)
+                display_text = re.sub(r"https?://(?:www\.)?(?:maps\.google\.com|google\.com/maps)[^\s'<)]+", "https://maps.app.goo.gl/B7oszYnEmBxMxLVe8", display_text)
                 # Make tagline pink bold in Lyra's responses
                 styled = display_text.replace(
                     "Always Young and Always Beautiful",
