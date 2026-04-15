@@ -72,11 +72,16 @@ header {visibility: hidden;}
     padding: 0.18rem 0.65rem; font-size: 0.74rem; font-weight: 600;
     display: inline-block;
 }
+@keyframes flashBanner {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
 .festival-banner {
     background: linear-gradient(90deg, #880e4f, #c2185b, #880e4f);
-    color: white; text-align: center; padding: 0.5rem 1rem;
-    border-radius: 8px; font-size: 0.85rem; font-weight: 600;
-    margin-bottom: 0.8rem; letter-spacing: 0.3px;
+    color: white; text-align: center; padding: 0.6rem 1rem;
+    border-radius: 8px; font-size: 1.05rem; font-weight: 700;
+    margin-bottom: 0.8rem; letter-spacing: 0.4px;
+    animation: flashBanner 1.5s ease-in-out infinite;
 }
 .lead-banner {
     background: linear-gradient(90deg, #1b5e20, #2e7d32);
