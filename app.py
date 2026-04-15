@@ -532,7 +532,7 @@ if st.session_state.page == "chat":
         )
         qcols = st.columns(4)
         quick_qs = [
-            ("📍 Location", "Where is Forever 21 Beauty Studio located? The address is Lane-3, Kalinga Vihar (K9A), Bhubaneswar – 751019, Odisha, Near Vivanta Hotel & D N Regalia Mall. Working hours are Every Day 9 AM to 9 PM. Google Maps: https://maps.app.goo.gl/B7oszYnEmBxMxLVe8"),
+            ("📍 Location", "Where is Forever 21 Beauty Studio located?"),
             ("💄 Bridal", "Tell me about bridal packages at Forever 21 Beauty Studio"),
             ("✨ Facials", "What facial treatments do you offer?"),
             ("💇 Hair", "What hair treatments are available?"),
