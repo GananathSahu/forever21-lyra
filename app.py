@@ -209,7 +209,7 @@ SERVICES_WITH_DURATION = {
         "Light / Party": 60, "Reception / Bridal": 60,
         "HD Bridal": 60, "Engagement": 120
     },
-    "Nail Art / Extension": {
+    "Nail & Extensions": {
         "Nail Extension / Nail Art": 60, "Nail Filling": 20
     },
     "Mehendi": {
