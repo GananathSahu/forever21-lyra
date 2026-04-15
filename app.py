@@ -459,14 +459,11 @@ if st.session_state.page == "chat":
         # ── Services ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.95rem;'>💅 Our Services</span>", unsafe_allow_html=True)
         svc_names = list(SERVICES_WITH_DURATION.keys())
-        # Display services as bold chips in rows of 4
-        for i in range(0, len(svc_names), 4):
-            row = svc_names[i:i+4]
-            st.markdown(
-                " &nbsp;·&nbsp; ".join(
-                    [f"**{s}**" for s in row]
-                )
-            )
+        # Display services as flowing text - no column wrapping
+        st.markdown(
+            " &nbsp;·&nbsp; ".join([f"**{s}**" for s in svc_names]),
+            unsafe_allow_html=True
+        )
 
         st.divider()
 
