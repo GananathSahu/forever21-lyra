@@ -215,7 +215,7 @@ SERVICES_WITH_DURATION = {
     "Mehendi": {
         "Hand Mehendi": 60, "Hair Mehendi": 120
     },
-    "Body": {
+    "Massage & Body Care": {
         "Body Massage": 60, "Hair Oil Massage": 40
     },
     "Piercing": {
