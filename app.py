@@ -104,10 +104,26 @@ header {visibility: hidden;}
 /* Compress main page left column too */
 section[data-testid="column"]:first-child .stMarkdown p {
     margin: 0 !important;
-    line-height: 1.3 !important;
+    line-height: 1.4 !important;
 }
 section[data-testid="column"]:first-child .element-container {
-    margin-bottom: 0.1rem !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+section[data-testid="column"]:first-child .stMarkdown {
+    min-height: 0 !important;
+}
+section[data-testid="column"]:first-child div[data-testid="stVerticalBlock"] > div {
+    gap: 0 !important;
+}
+section[data-testid="column"]:first-child .stButton {
+    margin: 0.1rem 0 !important;
+}
+section[data-testid="column"]:first-child .stSelectbox {
+    margin: 0.1rem 0 !important;
+}
+section[data-testid="column"]:first-child .stLinkButton {
+    margin: 0.1rem 0 !important;
 }
 .stChatInput > div {
     border: 2.5px solid #C2185B !important;
