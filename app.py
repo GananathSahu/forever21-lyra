@@ -340,6 +340,13 @@ logo_b64 = load_logo()
 if FESTIVAL_BANNER:
     st.markdown(f"<div class='festival-banner'>🎉 {FESTIVAL_BANNER}</div>",
                 unsafe_allow_html=True)
+st.markdown("""
+<div style='background:linear-gradient(135deg,#fff9fb,#fce4ec); border:2px solid #C2185B;
+border-radius:10px; padding:0.6rem 1rem; margin-bottom:0.8rem; font-size:0.82rem; color:#3a3a3a;'>
+<span style='color:#8B3A62; font-weight:700; font-size:0.88rem;'>🏷️ Special Discounts — 10% Off!</span><br>
+📚 <b>Students</b> &nbsp;|👵 <b>Senior Citizens</b> &nbsp;|⏰ <b>Happy Hours</b> 12–4 PM &nbsp;|💍 <b>Packages</b> &nbsp;|🎉 <b>Special Occasions</b><br>
+<span style='color:#C2185B; font-size:0.78rem;'>Ask Lyra for details or call Bini Didi: +91 98531 15511</span>
+</div>""", unsafe_allow_html=True)
 
 
 # ── Navigation ──
@@ -525,7 +532,7 @@ if st.session_state.page == "chat":
         )
         qcols = st.columns(4)
         quick_qs = [
-            ("📍 Location", "Where is Forever 21 Beauty Studio located? The address is Lane-3, Kalinga Vihar (K9A), Bhubaneswar – 751019, Odisha, Near Vivanta Hotel & D N Regalia Mall. Working hours are Every Day 9 AM to 9 PM."),
+            ("📍 Location", "Where is Forever 21 Beauty Studio located? The address is Lane-3, Kalinga Vihar (K9A), Bhubaneswar – 751019, Odisha, Near Vivanta Hotel & D N Regalia Mall. Working hours are Every Day 9 AM to 9 PM. Google Maps: https://maps.app.goo.gl/B7oszYnEmBxMxLVe8"),
             ("💄 Bridal", "Tell me about bridal packages at Forever 21 Beauty Studio"),
             ("✨ Facials", "What facial treatments do you offer?"),
             ("💇 Hair", "What hair treatments are available?"),
@@ -687,7 +694,7 @@ elif st.session_state.page == "gallery":
         <div style='font-family:Playfair Display,serif; font-size:1rem;
              color:#8B3A62; font-weight:600; margin-bottom:0.4rem;'>
             Want to see your transformation here? 🌸</div>
-        <a href='https://wa.me/919853115511' target='_blank'
+        <a href='https://wa.me/919853115511?text=Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.' target='_blank'
            style='display:inline-block; background:#25D366; color:white;
            border-radius:10px; padding:0.5rem 1.2rem; margin-top:0.5rem;
            text-decoration:none; font-weight:700; font-size:0.85rem;'>
