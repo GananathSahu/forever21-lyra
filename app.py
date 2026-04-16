@@ -88,6 +88,15 @@ header {visibility: hidden;}
     color: white; border-radius: 10px; padding: 0.6rem 1rem;
     font-size: 0.85rem; margin-top: 0.5rem; font-weight: 600;
 }
+@keyframes flashArrow {
+    0%, 100% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0.2; transform: translateY(6px); }
+}
+.scroll-arrow {
+    text-align: center; font-size: 2.5rem;
+    animation: flashArrow 0.8s ease-in-out infinite;
+    color: #C2185B; padding: 0.3rem 0;
+}
 .stChatInput > div {
     border: 2.5px solid #C2185B !important;
     border-radius: 12px !important;
@@ -345,7 +354,8 @@ def parse_date(ts):
 
 # ── Session state ───────────────────────────────────────────────────────────────
 for key, val in [("messages", []), ("lead_saved", False),
-                 ("admin_logged_in", False), ("page", "chat")]:
+                 ("admin_logged_in", False), ("page", "chat"),
+                 ("_lyra_thinking", False)]:
     if key not in st.session_state:
         st.session_state[key] = val
 
@@ -570,29 +580,33 @@ if st.session_state.page == "chat":
             <p>Powered by Lyra AI • Your Personal Beauty Consultant</p>
         </div>""", unsafe_allow_html=True)
 
-        # Welcome box
-        st.markdown("""
-        <div class='welcome-box'>
-            <div class='welcome-title'>
-                Namaskar! I'm Lyra, your Digital Host at Forever 21 Beauty Studio. 🌸
-            </div>
-            With Bini Didi, I'm here to help you remain
-            <span class='tagline'>Always Young and Always Beautiful.</span>
-            <br><br>How can I help you to be a glowing beauty today?
-            <div class='lang-row'>
-                <span class='lchip'>English</span>
-                <span class='lchip'>हिन्दी</span>
-                <span class='lchip'>ଓଡ଼ିଆ</span>
-                <span class='lchip2'>English + हिन्दी</span>
-                <span class='lchip2'>English + ଓଡ଼ିଆ</span>
-                <span class='lchip3'>All Three</span>
-            </div>
-        </div>""", unsafe_allow_html=True)
+        # compact_welcome — v9.1
+        st.markdown(
+            "<div style='background:linear-gradient(135deg,#fff9fb,#fce4ec);"
+            "border-left:4px solid #C2185B; border-radius:10px;"
+            "padding:0.5rem 1rem; margin-bottom:0.5rem; font-size:0.88rem;'>"
+            "<span style='font-family:Playfair Display,serif; font-weight:700;"
+            "color:#8B3A62;'>Namaskar! I'm Lyra 🌸</span>"
+            " &#8212; With Bini Didi, helping you remain "
+            "<span style='font-family:Playfair Display,serif; font-weight:700;"
+            "font-style:italic; color:#C2185B;'>Always Young and Always Beautiful.</span>"
+            "</div>",
+            unsafe_allow_html=True
+        )
 
         user_input = st.chat_input("💬 Type your message here and press Enter…")
         if st.session_state.get("chip_question"):
             user_input = st.session_state.chip_question
             st.session_state.chip_question = None
+        # arrow_fixed — always visible placeholder above messages
+        _arrow_placeholder = st.empty()
+        if st.session_state.get('_lyra_thinking'):
+            _arrow_placeholder.markdown(
+                "<div class='scroll-arrow'>⬇️ Lyra is responding — scroll down ⬇️</div>",
+                unsafe_allow_html=True
+            )
+        else:
+            _arrow_placeholder.empty()
         # Chat
 
         for msg in st.session_state.messages:
@@ -604,22 +618,24 @@ if st.session_state.page == "chat":
             with st.chat_message("user"):
                 st.markdown(user_input)
             with st.chat_message("assistant"):
+                st.session_state['_lyra_thinking'] = True
                 with st.spinner("Lyra is thinking…"):
                     raw = chat_with_lyra(st.session_state.messages, system_prompt)
                 display_text, lead_name, lead_phone = extract_lead(raw)
                 # Force correct Maps link - replace any Google Maps generated link
                 display_text = re.sub(r"https?://(?:www\.)?(?:maps\.google\.com|google\.com/maps)[^\s'<)]+", "https://maps.app.goo.gl/B7oszYnEmBxMxLVe8", display_text)
-                # Make tagline pink bold in Lyra's responses
-                styled = display_text.replace(
-                    "Always Young and Always Beautiful",
-                    "<span style='color:#C2185B; font-weight:700; font-style:italic;'>"
-                    "Always Young and Always Beautiful</span>"
-                ).replace(
-                    "Always Young, Always Beautiful",
-                    "<span style='color:#C2185B; font-weight:700; font-style:italic;'>"
-                    "Always Young, Always Beautiful</span>"
-                )
+                # Make tagline pink bold in Lyra's responses — patch_v91
+                _tag1 = "<span style='color:#C2185B; font-weight:700; font-style:italic;'>Always Young and Always Beautiful</span>"
+                _tag2 = "<span style='color:#C2185B; font-weight:700; font-style:italic;'>Always Young, Always Beautiful</span>"
+                styled = display_text\
+                    .replace('**Always Young and Always Beautiful**', _tag1)\
+                    .replace('**Always Young, Always Beautiful**', _tag2)\
+                    .replace('*Always Young and Always Beautiful*', _tag1)\
+                    .replace('*Always Young, Always Beautiful*', _tag2)\
+                    .replace('Always Young and Always Beautiful', _tag1)\
+                    .replace('Always Young, Always Beautiful', _tag2)
                 st.markdown(styled, unsafe_allow_html=True)
+                st.session_state['_lyra_thinking'] = False
                 if lead_name and lead_phone and not st.session_state.lead_saved:
                     if is_valid_indian_mobile(lead_phone) and save_lead_to_sheet(lead_name, lead_phone):
                         st.session_state.lead_saved = True
