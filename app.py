@@ -368,13 +368,6 @@ logo_b64 = load_logo()
 if FESTIVAL_BANNER:
     st.markdown(f"<div class='festival-banner'>🎉 {FESTIVAL_BANNER}</div>",
                 unsafe_allow_html=True)
-st.markdown("""
-<div style='background:linear-gradient(135deg,#fff9fb,#fce4ec); border:2px solid #C2185B;
-border-radius:10px; padding:0.6rem 1rem; margin-bottom:0.8rem; font-size:0.82rem; color:#3a3a3a;'>
-<span style='color:#8B3A62; font-weight:700; font-size:0.88rem;'>🏷️ Special Discounts — 10% Off!</span><br>
-📚 <b>Students</b> &nbsp;|👵 <b>Senior Citizens</b> &nbsp;|⏰ <b>Happy Hours</b> 12–4 PM &nbsp;|💍 <b>Packages</b> &nbsp;|🎉 <b>Special Occasions</b><br>
-<span style='color:#C2185B; font-size:0.78rem;'>Ask Lyra for details or call Bini Didi: +91 98531 15511</span>
-</div>""", unsafe_allow_html=True)
 
 # ── Navigation moved to left panel (Session 5 Step 1) ──
 _page = st.session_state.page
@@ -406,7 +399,17 @@ if st.session_state.page == "chat":
                 unsafe_allow_html=True
             )
 
-        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        # tagline_below_logo
+        st.markdown(
+            "<div style='text-align:center; padding:0.2rem 0 0.3rem 0;'>"
+            "<span style='font-family:Playfair Display,serif; font-weight:700;"
+            "font-style:italic; color:#C2185B; font-size:1.1rem;"
+            "text-shadow:0 1px 2px rgba(194,24,91,0.15);'>"
+            "✨ Always Young, Always Beautiful. ✨"
+            "</span></div>",
+            unsafe_allow_html=True
+        )
+        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
         # ── Nav buttons ──
         _lnav1, _lnav2, _lnav3 = st.columns(3)
         with _lnav1:
@@ -421,7 +424,7 @@ if st.session_state.page == "chat":
             if st.button("Dashboard", use_container_width=True, key="nav_admin",
                          type="primary" if _page=="admin" else "secondary"):
                 st.session_state.page = "admin"; st.rerun()
-        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
 
         # ── Quick Question Chips ── (moved to left panel Session 5 Step 2)
@@ -486,7 +489,7 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
 
-        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Contact ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>📞 Contact Us</span>", unsafe_allow_html=True)
@@ -517,7 +520,7 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
 
-        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Working Hours ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
@@ -529,7 +532,7 @@ if st.session_state.page == "chat":
         st.markdown("**Early opening & late closing** possible with prior appointment.", unsafe_allow_html=False)
         st.markdown("_* Confirm timings while booking_")
 
-        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Services ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>💅 Our Services</span>", unsafe_allow_html=True)
@@ -547,7 +550,7 @@ if st.session_state.page == "chat":
         ])
         st.markdown(f"<table style='width:100%; font-size:0.82rem; border-collapse:collapse;'>{rows}</table>", unsafe_allow_html=True)
 
-        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Social Links ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>🌐 Follow & Review Us</span>", unsafe_allow_html=True)
@@ -561,7 +564,7 @@ if st.session_state.page == "chat":
                        "https://share.google/nZogQL8Y5usCwPmWy",
                        use_container_width=True)
 
-        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
         st.markdown(
             "<div style='text-align:center; padding:0.3rem 0;'>"
             "<span style='color:#C2185B; font-weight:700; font-style:italic; font-size:0.85rem;'>"
@@ -573,6 +576,15 @@ if st.session_state.page == "chat":
 
     # ── RIGHT COLUMN ─────────────────────────────────────────────────
     with right:
+        # patch_polish — discount moved here from full width
+        st.markdown("""
+<div style='background:linear-gradient(135deg,#fff9fb,#fce4ec); border:2px solid #C2185B;
+border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem; color:#3a3a3a;'>
+<span style='color:#8B3A62; font-weight:700; font-size:0.88rem;'>🏷️ Special Discounts — 10% Off!</span><br>
+📚 <b>Students</b> &nbsp;|👵 <b>Senior Citizens</b> &nbsp;|⏰ <b>Happy Hours</b> 12–4 PM &nbsp;|💍 <b>Packages</b> &nbsp;|🎉 <b>Special Occasions</b><br>
+<span style='color:#C2185B; font-size:0.78rem;'>Ask Lyra for details or call Bini Didi: +91 98531 15511</span>
+</div>""", unsafe_allow_html=True)
+
         # Header
         st.markdown("""
         <div class='lyra-header'>
