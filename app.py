@@ -355,7 +355,7 @@ def parse_date(ts):
 # ── Session state ───────────────────────────────────────────────────────────────
 for key, val in [("messages", []), ("lead_saved", False),
                  ("admin_logged_in", False), ("page", "chat"),
-                 ("_lyra_thinking", False)]:
+                 ("_lyra_thinking", False), ("_pending_input", None)]:
     if key not in st.session_state:
         st.session_state[key] = val
 
@@ -625,12 +625,19 @@ border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem
             with st.chat_message(msg["role"]):
                 st.markdown(msg["content"])
 
-        if user_input:
+        # arrow_rerun — phase 1: capture input and trigger rerun
+        if user_input and not st.session_state.get('_pending_input'):
+            st.session_state['_pending_input'] = user_input
+            st.session_state['_lyra_thinking'] = True
+            st.rerun()
+        # arrow_rerun — phase 2: process stored input
+        if st.session_state.get('_lyra_thinking') and st.session_state.get('_pending_input'):
+            user_input = st.session_state['_pending_input']
+            st.session_state['_pending_input'] = None
             st.session_state.messages.append({"role": "user", "content": user_input})
             with st.chat_message("user"):
                 st.markdown(user_input)
             with st.chat_message("assistant"):
-                st.session_state['_lyra_thinking'] = True
                 with st.spinner("Lyra is thinking…"):
                     raw = chat_with_lyra(st.session_state.messages, system_prompt)
                 display_text, lead_name, lead_phone = extract_lead(raw)
