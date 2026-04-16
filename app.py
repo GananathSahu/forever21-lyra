@@ -366,26 +366,8 @@ border-radius:10px; padding:0.6rem 1rem; margin-bottom:0.8rem; font-size:0.82rem
 <span style='color:#C2185B; font-size:0.78rem;'>Ask Lyra for details or call Bini Didi: +91 98531 15511</span>
 </div>""", unsafe_allow_html=True)
 
-
-# ── Navigation ──
+# ── Navigation moved to left panel (Session 5 Step 1) ──
 _page = st.session_state.page
-n1, n2, n3, n4 = st.columns([2.2, 1, 1, 1])
-with n2:
-    if st.button("💬 Chat", use_container_width=True, key="nav_chat",
-                 type="primary" if _page=="chat" else "secondary"):
-        st.session_state.page = "chat"; st.rerun()
-with n3:
-    if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery",
-                 type="primary" if _page=="gallery" else "secondary"):
-        st.session_state.page = "gallery"; st.rerun()
-with n4:
-    if st.button("🔐 Dashboard", use_container_width=True, key="nav_admin",
-                 type="primary" if _page=="admin" else "secondary"):
-        st.session_state.page = "admin"; st.rerun()
-
-st.markdown("<hr style='margin:0.3rem 0 0.6rem 0; border-color:rgba(139,58,98,0.2);'>",
-            unsafe_allow_html=True)
-
 # ══════════════════════════════════════════════════════════════════════
 # PAGE: CHAT
 # ══════════════════════════════════════════════════════════════════════
@@ -414,6 +396,21 @@ if st.session_state.page == "chat":
                 unsafe_allow_html=True
             )
 
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        # ── Nav buttons ──
+        _lnav1, _lnav2, _lnav3 = st.columns(3)
+        with _lnav1:
+            if st.button("💬 Chat", use_container_width=True, key="nav_chat",
+                         type="primary" if _page=="chat" else "secondary"):
+                st.session_state.page = "chat"; st.rerun()
+        with _lnav2:
+            if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery",
+                         type="primary" if _page=="gallery" else "secondary"):
+                st.session_state.page = "gallery"; st.rerun()
+        with _lnav3:
+            if st.button("Dashboard", use_container_width=True, key="nav_admin",
+                         type="primary" if _page=="admin" else "secondary"):
+                st.session_state.page = "admin"; st.rerun()
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Find Us ──
