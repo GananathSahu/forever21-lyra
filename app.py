@@ -413,6 +413,56 @@ if st.session_state.page == "chat":
                 st.session_state.page = "admin"; st.rerun()
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
+
+        # ── Quick Question Chips ── (moved to left panel Session 5 Step 2)
+        # ── Quick Question Chips ──
+        st.markdown(
+            "<div style='margin-bottom:0.5rem;'>"
+            "<span style='color:#8B3A62; font-size:0.78rem; font-weight:700;'>"
+            "💡 Quick questions — tap to ask Lyra:</span></div>",
+            unsafe_allow_html=True
+        )
+        qcols = st.columns(4)
+        quick_qs = [
+            ("Location", "Where is Forever 21 Beauty Studio located?"),
+            ("Bridal", "Tell me about bridal packages at Forever 21 Beauty Studio"),
+            ("Facials", "What facial treatments do you offer?"),
+            ("Hair", "What hair treatments are available?"),
+        ]
+        if "chip_question" not in st.session_state:
+            st.session_state.chip_question = None
+        for i, (label, question) in enumerate(quick_qs):
+            with qcols[i]:
+                if st.button(label, use_container_width=True, key=f"qchip_{i}"):
+                    st.session_state.chip_question = question
+                    st.rerun()
+
+
+        # ── Service Explorer ──
+        with st.expander("💅 Explore Our Services & Time Required"):
+            cat_choice = st.selectbox(
+                "Select a category",
+                ["— Choose a category —"] + list(SERVICES_WITH_DURATION.keys()),
+                key="svc_cat"
+            )
+            if cat_choice != "— Choose a category —":
+                svcs = SERVICES_WITH_DURATION[cat_choice]
+                rows = "".join([
+                    f"<div class='svc-row'>"
+                    f"<span>{svc}</span>"
+                    f"<span class='svc-badge'>⏱ {format_duration(dur)}</span>"
+                    f"</div>"
+                    for svc, dur in svcs.items()
+                ])
+                st.markdown(
+                    f"<div style='border:2px solid #f8bbd0; border-radius:10px;"
+                    f"overflow:hidden; margin-top:0.4rem;'>{rows}</div>",
+                    unsafe_allow_html=True
+                )
+
+
+
+
         # ── Find Us ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>📍 Find Us</span>", unsafe_allow_html=True)
         st.markdown("**Lane-3, Kalinga Vihar (K9A)**")
@@ -510,6 +560,7 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
 
+
     # ── RIGHT COLUMN ─────────────────────────────────────────────────
     with right:
         # Header
@@ -542,51 +593,6 @@ if st.session_state.page == "chat":
         if st.session_state.get("chip_question"):
             user_input = st.session_state.chip_question
             st.session_state.chip_question = None
-        # ── Quick Question Chips ──
-        st.markdown(
-            "<div style='margin-bottom:0.5rem;'>"
-            "<span style='color:#8B3A62; font-size:0.78rem; font-weight:700;'>"
-            "💡 Quick questions — tap to ask Lyra:</span></div>",
-            unsafe_allow_html=True
-        )
-        qcols = st.columns(4)
-        quick_qs = [
-            ("📍 Location", "Where is Forever 21 Beauty Studio located?"),
-            ("💄 Bridal", "Tell me about bridal packages at Forever 21 Beauty Studio"),
-            ("✨ Facials", "What facial treatments do you offer?"),
-            ("💇 Hair", "What hair treatments are available?"),
-        ]
-        if "chip_question" not in st.session_state:
-            st.session_state.chip_question = None
-        for i, (label, question) in enumerate(quick_qs):
-            with qcols[i]:
-                if st.button(label, use_container_width=True, key=f"qchip_{i}"):
-                    st.session_state.chip_question = question
-                    st.rerun()
-
-
-        # ── Service Explorer ──
-        with st.expander("💅 Explore Our Services & Time Required"):
-            cat_choice = st.selectbox(
-                "Select a category",
-                ["— Choose a category —"] + list(SERVICES_WITH_DURATION.keys()),
-                key="svc_cat"
-            )
-            if cat_choice != "— Choose a category —":
-                svcs = SERVICES_WITH_DURATION[cat_choice]
-                rows = "".join([
-                    f"<div class='svc-row'>"
-                    f"<span>{svc}</span>"
-                    f"<span class='svc-badge'>⏱ {format_duration(dur)}</span>"
-                    f"</div>"
-                    for svc, dur in svcs.items()
-                ])
-                st.markdown(
-                    f"<div style='border:2px solid #f8bbd0; border-radius:10px;"
-                    f"overflow:hidden; margin-top:0.4rem;'>{rows}</div>",
-                    unsafe_allow_html=True
-                )
-
         # Chat
 
         for msg in st.session_state.messages:
