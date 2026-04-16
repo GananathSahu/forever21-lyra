@@ -655,178 +655,250 @@ if st.session_state.page == "chat":
 # PAGE: GALLERY
 # ══════════════════════════════════════════════════════════════════════
 elif st.session_state.page == "gallery":
-    st.markdown("""
-    <div class='lyra-header'>
-        <h1>🖼️ Before & After Gallery</h1>
-        <p>Real transformations at Forever 21 Beauty Studio</p>
-    </div>""", unsafe_allow_html=True)
-
-    st.info("📸 Gallery coming soon! Bini Didi is preparing beautiful before & after photos.")
-
-    cats = ["All"] + sorted(set(g["category"] for g in GALLERY_ITEMS))
-    filt = st.selectbox("Filter by category", cats)
-    items = GALLERY_ITEMS if filt == "All" else \
-        [g for g in GALLERY_ITEMS if g["category"] == filt]
-
-    cols = st.columns(3)
-    for i, item in enumerate(items):
-        with cols[i % 3]:
-            if item.get("youtube",""):
-                st.markdown(
-                    f"<iframe width='100%' height='180' "
-                    f"src='{item.get("youtube","")}' "
-                    f"frameborder='0' allowfullscreen></iframe>",
-                    unsafe_allow_html=True
-                )
-            else:
-                img_key = item.get("image_key","")
-                if img_key and img_key in GALLERY_B64:
-                    st.markdown(
-                        f"<img src='data:image/jpeg;base64,{GALLERY_B64[img_key]}' "
-                        f"style='width:100%; border-radius:10px; "
-                        f"border:2px solid #f8bbd0;'>",
-                        unsafe_allow_html=True
-                    )
-                else:
-                    st.markdown(
-                        "<div style='background:linear-gradient(135deg,#fce4ec,#f8bbd0);"
-                        "height:150px; border-radius:10px; display:flex;"
-                        "align-items:center; justify-content:center;'>"
-                        "<div style='font-size:2.2rem;'>📸</div></div>",
-                        unsafe_allow_html=True
-                    )
-            st.markdown(f"**{item['label']}**")
-            st.caption(item["description"])
-
-    # Disclaimer on gallery
-    st.markdown(
-        "<div style='margin-top:1rem; padding:0.6rem 1rem; "
-        "background:#f9f9f9; border-radius:8px; "
-        "border-left:3px solid #C2185B; font-size:0.7rem; color:#666;'>"
-        "<strong style='color:#8B3A62;'>📋 Disclaimer:</strong> "
-        "Images shown are for illustrative purposes. "
-        "Actual results may vary based on individual skin and hair type. "
-        "Lyra is an AI assistant — for personalised advice please contact Bini Didi.</div>",
-        unsafe_allow_html=True
-    )
-    st.markdown("""
-    <div style='text-align:center; margin-top:1.5rem; padding:1rem;
-         background:#fce4ec; border-radius:12px;'>
-        <div style='font-family:Playfair Display,serif; font-size:1rem;
-             color:#8B3A62; font-weight:600; margin-bottom:0.4rem;'>
-            Want to see your transformation here? 🌸</div>
-        <a href='https://wa.me/919853115511?text=Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.' target='_blank'
-           style='display:inline-block; background:#25D366; color:white;
-           border-radius:10px; padding:0.5rem 1.2rem; margin-top:0.5rem;
-           text-decoration:none; font-weight:700; font-size:0.85rem;'>
-           💬 Book via WhatsApp</a>
-    </div>""", unsafe_allow_html=True)
-
-# ══════════════════════════════════════════════════════════════════════
-# PAGE: ADMIN DASHBOARD
-# ══════════════════════════════════════════════════════════════════════
-elif st.session_state.page == "admin":
-    st.markdown("""
-    <div class='lyra-header'>
-        <h1>📊 Bini's Dashboard</h1>
-        <p>Forever 21 Beauty Studio — Lead Management</p>
-    </div>""", unsafe_allow_html=True)
-
-    if not st.session_state.admin_logged_in:
-        _, mid, _ = st.columns([1, 1.2, 1])
-        with mid:
-            pwd = st.text_input("Password", type="password")
-            if st.button("🔓 Login", use_container_width=True):
-                if hashlib.sha256(pwd.encode()).hexdigest() == ADMIN_PASSWORD_HASH:
-                    st.session_state.admin_logged_in = True
-                    st.rerun()
-                else:
-                    st.error("Incorrect password.")
-    else:
-        if st.button("🔒 Logout"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-
-        try:
-            sheet = get_sheet()
-            all_data = sheet.get_all_values()
-            rows = all_data[1:] if (all_data and all_data[0][0] == "Timestamp") \
-                else all_data
-
-            leads = []
-            for r in rows:
-                while len(r) < 5:
-                    r.append("")
-                leads.append({"Timestamp": r[0], "Name": r[1],
-                               "Phone": r[2], "Status": r[3], "Source": r[4]})
-
-            st.markdown("### 📅 Filter by Date")
-            d1, d2 = st.columns(2)
-            with d1:
-                date_from = st.date_input("From", value=date(2026, 1, 1))
-            with d2:
-                date_to = st.date_input("To", value=date.today())
-
-            filtered = [l for l in leads
-                        if date_from <= parse_date(l["Timestamp"]) <= date_to]
-
-            total = len(filtered)
-            new = sum(1 for l in filtered if l["Status"] == "New Lead")
-            called = sum(1 for l in filtered if l["Status"] == "Called")
-            booked = sum(1 for l in filtered if l["Status"] == "Booked")
-            lost = sum(1 for l in filtered if l["Status"] == "Lost")
-
-            m1, m2, m3, m4, m5 = st.columns(5)
-            for col, label, val in [
-                (m1, "Total", total), (m2, "New", new),
-                (m3, "Called", called), (m4, "Booked", booked),
-                (m5, "Lost", lost)
-            ]:
-                with col:
-                    st.metric(label, val)
-
-            st.markdown(f"### 📋 Leads ({len(filtered)})")
-            for i, lead in enumerate(reversed(filtered)):
-                status = lead["Status"] or "New Lead"
-                with st.expander(
-                    f"👤 {lead['Name']} — {lead['Phone']} | {lead['Timestamp']}"
-                ):
-                    c1, c2, c3 = st.columns(3)
-                    with c1:
-                        st.write(f"**Name:** {lead['Name']}")
-                        st.write(f"**Phone:** {lead['Phone']}")
-                    with c2:
-                        st.write(f"**Date:** {lead['Timestamp']}")
-                        st.write(f"**Source:** {lead.get('Source','Website')}")
-                    with c3:
-                        st.write(f"**Status:** {status}")
-                        new_status = st.selectbox(
-                            "Update",
-                            ["New Lead", "Called", "Booked", "Lost"],
-                            index=["New Lead","Called","Booked","Lost"].index(status)
-                            if status in ["New Lead","Called","Booked","Lost"] else 0,
-                            key=f"st_{i}"
+    left_gallery, right_gallery = st.columns([1, 2.4])
+    with left_gallery:
+        logo_b64 = load_logo()
+        if logo_b64:
+            st.markdown(
+                f"<div style='text-align:center; padding:0.3rem 0 0.5rem 0;'>"
+                f"<img src='data:image/png;base64,{logo_b64}' "
+                f"style='max-width:180px; display:block; margin:0 auto;'/>"
+                f"</div>",
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                "<div style='text-align:center; padding:0.3rem 0;'>"
+                "<span style='font-size:1.8rem;'>💄</span><br>"
+                "<strong>Forever 21</strong><br>"
+                "<small>Beauty Studio</small></div>",
+                unsafe_allow_html=True
+            )
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        # ── Nav buttons ──
+        _lnav1, _lnav2, _lnav3 = st.columns(3)
+        with _lnav1:
+            if st.button("💬 Chat", use_container_width=True, key="nav_chat_g",
+                         type="primary" if _page=="chat" else "secondary"):
+                st.session_state.page = "chat"; st.rerun()
+        with _lnav2:
+            if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery_g",
+                         type="primary" if _page=="gallery" else "secondary"):
+                st.session_state.page = "gallery"; st.rerun()
+        with _lnav3:
+            if st.button("Dashboard", use_container_width=True, key="nav_admin_g",
+                         type="primary" if _page=="admin" else "secondary"):
+                st.session_state.page = "admin"; st.rerun()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+    with right_gallery:
+            st.markdown("""
+            <div class='lyra-header'>
+                <h1>🖼️ Before & After Gallery</h1>
+                <p>Real transformations at Forever 21 Beauty Studio</p>
+            </div>""", unsafe_allow_html=True)
+        
+            st.info("📸 Gallery coming soon! Bini Didi is preparing beautiful before & after photos.")
+        
+            cats = ["All"] + sorted(set(g["category"] for g in GALLERY_ITEMS))
+            filt = st.selectbox("Filter by category", cats)
+            items = GALLERY_ITEMS if filt == "All" else \
+                [g for g in GALLERY_ITEMS if g["category"] == filt]
+        
+            cols = st.columns(3)
+            for i, item in enumerate(items):
+                with cols[i % 3]:
+                    if item.get("youtube",""):
+                        st.markdown(
+                            f"<iframe width='100%' height='180' "
+                            f"src='{item.get("youtube","")}' "
+                            f"frameborder='0' allowfullscreen></iframe>",
+                            unsafe_allow_html=True
                         )
-                        if st.button("💾 Save", key=f"sv_{i}"):
-                            try:
-                                all_rows = sheet.get_all_values()
-                                for ri, row in enumerate(all_rows):
-                                    if (len(row) >= 3 and
-                                        row[1] == lead["Name"] and
-                                        row[2] == lead["Phone"] and
-                                        row[0] == lead["Timestamp"]):
-                                        sheet.update_cell(ri + 1, 4, new_status)
-                                        st.success("✅ Updated!")
-                                        break
-                            except Exception as e:
-                                st.error(f"Error: {e}")
-                    phone_clean = lead["Phone"].replace(" ","").replace("+91","").replace("-","")
-                    st.markdown(
-                        f"<a href='https://wa.me/91{phone_clean}' target='_blank' "
-                        f"style='background:#25D366; color:white; border-radius:8px; "
-                        f"padding:0.3rem 0.8rem; text-decoration:none; font-weight:600; "
-                        f"font-size:0.82rem;'>💬 WhatsApp this customer</a>",
-                        unsafe_allow_html=True
-                    )
-        except Exception as e:
-            st.error(f"Could not load leads: {e}")
+                    else:
+                        img_key = item.get("image_key","")
+                        if img_key and img_key in GALLERY_B64:
+                            st.markdown(
+                                f"<img src='data:image/jpeg;base64,{GALLERY_B64[img_key]}' "
+                                f"style='width:100%; border-radius:10px; "
+                                f"border:2px solid #f8bbd0;'>",
+                                unsafe_allow_html=True
+                            )
+                        else:
+                            st.markdown(
+                                "<div style='background:linear-gradient(135deg,#fce4ec,#f8bbd0);"
+                                "height:150px; border-radius:10px; display:flex;"
+                                "align-items:center; justify-content:center;'>"
+                                "<div style='font-size:2.2rem;'>📸</div></div>",
+                                unsafe_allow_html=True
+                            )
+                    st.markdown(f"**{item['label']}**")
+                    st.caption(item["description"])
+        
+            # Disclaimer on gallery
+            st.markdown(
+                "<div style='margin-top:1rem; padding:0.6rem 1rem; "
+                "background:#f9f9f9; border-radius:8px; "
+                "border-left:3px solid #C2185B; font-size:0.7rem; color:#666;'>"
+                "<strong style='color:#8B3A62;'>📋 Disclaimer:</strong> "
+                "Images shown are for illustrative purposes. "
+                "Actual results may vary based on individual skin and hair type. "
+                "Lyra is an AI assistant — for personalised advice please contact Bini Didi.</div>",
+                unsafe_allow_html=True
+            )
+            st.markdown("""
+            <div style='text-align:center; margin-top:1.5rem; padding:1rem;
+                 background:#fce4ec; border-radius:12px;'>
+                <div style='font-family:Playfair Display,serif; font-size:1rem;
+                     color:#8B3A62; font-weight:600; margin-bottom:0.4rem;'>
+                    Want to see your transformation here? 🌸</div>
+                <a href='https://wa.me/919853115511?text=Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.' target='_blank'
+                   style='display:inline-block; background:#25D366; color:white;
+                   border-radius:10px; padding:0.5rem 1.2rem; margin-top:0.5rem;
+                   text-decoration:none; font-weight:700; font-size:0.85rem;'>
+                   💬 Book via WhatsApp</a>
+            </div>""", unsafe_allow_html=True)
+        
+        # ══════════════════════════════════════════════════════════════════════
+        # PAGE: ADMIN DASHBOARD
+        # ══════════════════════════════════════════════════════════════════════
+elif st.session_state.page == "admin":
+    left_admin, right_admin = st.columns([1, 2.4])
+    with left_admin:
+        logo_b64 = load_logo()
+        if logo_b64:
+            st.markdown(
+                f"<div style='text-align:center; padding:0.3rem 0 0.5rem 0;'>"
+                f"<img src='data:image/png;base64,{logo_b64}' "
+                f"style='max-width:180px; display:block; margin:0 auto;'/>"
+                f"</div>",
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                "<div style='text-align:center; padding:0.3rem 0;'>"
+                "<span style='font-size:1.8rem;'>💄</span><br>"
+                "<strong>Forever 21</strong><br>"
+                "<small>Beauty Studio</small></div>",
+                unsafe_allow_html=True
+            )
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        # ── Nav buttons ──
+        _lnav1, _lnav2, _lnav3 = st.columns(3)
+        with _lnav1:
+            if st.button("💬 Chat", use_container_width=True, key="nav_chat_a",
+                         type="primary" if _page=="chat" else "secondary"):
+                st.session_state.page = "chat"; st.rerun()
+        with _lnav2:
+            if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery_a",
+                         type="primary" if _page=="gallery" else "secondary"):
+                st.session_state.page = "gallery"; st.rerun()
+        with _lnav3:
+            if st.button("Dashboard", use_container_width=True, key="nav_admin_a",
+                         type="primary" if _page=="admin" else "secondary"):
+                st.session_state.page = "admin"; st.rerun()
+        st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+    with right_admin:
+            st.markdown("""
+            <div class='lyra-header'>
+                <h1>📊 Bini's Dashboard</h1>
+                <p>Forever 21 Beauty Studio — Lead Management</p>
+            </div>""", unsafe_allow_html=True)
+        
+            if not st.session_state.admin_logged_in:
+                _, mid, _ = st.columns([1, 1.2, 1])
+                with mid:
+                    pwd = st.text_input("Password", type="password")
+                    if st.button("🔓 Login", use_container_width=True):
+                        if hashlib.sha256(pwd.encode()).hexdigest() == ADMIN_PASSWORD_HASH:
+                            st.session_state.admin_logged_in = True
+                            st.rerun()
+                        else:
+                            st.error("Incorrect password.")
+            else:
+                if st.button("🔒 Logout"):
+                    st.session_state.admin_logged_in = False
+                    st.rerun()
+        
+                try:
+                    sheet = get_sheet()
+                    all_data = sheet.get_all_values()
+                    rows = all_data[1:] if (all_data and all_data[0][0] == "Timestamp") \
+                        else all_data
+        
+                    leads = []
+                    for r in rows:
+                        while len(r) < 5:
+                            r.append("")
+                        leads.append({"Timestamp": r[0], "Name": r[1],
+                                       "Phone": r[2], "Status": r[3], "Source": r[4]})
+        
+                    st.markdown("### 📅 Filter by Date")
+                    d1, d2 = st.columns(2)
+                    with d1:
+                        date_from = st.date_input("From", value=date(2026, 1, 1))
+                    with d2:
+                        date_to = st.date_input("To", value=date.today())
+        
+                    filtered = [l for l in leads
+                                if date_from <= parse_date(l["Timestamp"]) <= date_to]
+        
+                    total = len(filtered)
+                    new = sum(1 for l in filtered if l["Status"] == "New Lead")
+                    called = sum(1 for l in filtered if l["Status"] == "Called")
+                    booked = sum(1 for l in filtered if l["Status"] == "Booked")
+                    lost = sum(1 for l in filtered if l["Status"] == "Lost")
+        
+                    m1, m2, m3, m4, m5 = st.columns(5)
+                    for col, label, val in [
+                        (m1, "Total", total), (m2, "New", new),
+                        (m3, "Called", called), (m4, "Booked", booked),
+                        (m5, "Lost", lost)
+                    ]:
+                        with col:
+                            st.metric(label, val)
+        
+                    st.markdown(f"### 📋 Leads ({len(filtered)})")
+                    for i, lead in enumerate(reversed(filtered)):
+                        status = lead["Status"] or "New Lead"
+                        with st.expander(
+                            f"👤 {lead['Name']} — {lead['Phone']} | {lead['Timestamp']}"
+                        ):
+                            c1, c2, c3 = st.columns(3)
+                            with c1:
+                                st.write(f"**Name:** {lead['Name']}")
+                                st.write(f"**Phone:** {lead['Phone']}")
+                            with c2:
+                                st.write(f"**Date:** {lead['Timestamp']}")
+                                st.write(f"**Source:** {lead.get('Source','Website')}")
+                            with c3:
+                                st.write(f"**Status:** {status}")
+                                new_status = st.selectbox(
+                                    "Update",
+                                    ["New Lead", "Called", "Booked", "Lost"],
+                                    index=["New Lead","Called","Booked","Lost"].index(status)
+                                    if status in ["New Lead","Called","Booked","Lost"] else 0,
+                                    key=f"st_{i}"
+                                )
+                                if st.button("💾 Save", key=f"sv_{i}"):
+                                    try:
+                                        all_rows = sheet.get_all_values()
+                                        for ri, row in enumerate(all_rows):
+                                            if (len(row) >= 3 and
+                                                row[1] == lead["Name"] and
+                                                row[2] == lead["Phone"] and
+                                                row[0] == lead["Timestamp"]):
+                                                sheet.update_cell(ri + 1, 4, new_status)
+                                                st.success("✅ Updated!")
+                                                break
+                                    except Exception as e:
+                                        st.error(f"Error: {e}")
+                            phone_clean = lead["Phone"].replace(" ","").replace("+91","").replace("-","")
+                            st.markdown(
+                                f"<a href='https://wa.me/91{phone_clean}' target='_blank' "
+                                f"style='background:#25D366; color:white; border-radius:8px; "
+                                f"padding:0.3rem 0.8rem; text-decoration:none; font-weight:600; "
+                                f"font-size:0.82rem;'>💬 WhatsApp this customer</a>",
+                                unsafe_allow_html=True
+                            )
+                except Exception as e:
+                    st.error(f"Could not load leads: {e}")
