@@ -475,9 +475,15 @@ if st.session_state.page == "chat":
 
         # ── Find Us ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>📍 Find Us</span>", unsafe_allow_html=True)
-        st.markdown("**Lane-3, Kalinga Vihar (K9A)**")
-        st.markdown("**Bhubaneswar – 751019, Odisha**")
-        st.markdown("<b>Near Vivanta Hotel & D N Regalia Mall</b>", unsafe_allow_html=True)
+        # patch_compact2 — compact address
+        st.markdown(
+            "<div style='font-size:0.82rem; line-height:1.5; margin:0.1rem 0;'>"
+            "<b>Lane-3, Kalinga Vihar (K9A)</b><br>"
+            "<b>Bhubaneswar – 751019, Odisha</b><br>"
+            "<b>Near Vivanta Hotel & D N Regalia Mall</b>"
+            "</div>",
+            unsafe_allow_html=True
+        )
         st.markdown(
             "<a href='https://maps.app.goo.gl/B7oszYnEmBxMxLVe8' target='_blank' "
             "style='display:block; text-align:center; background:#C2185B; color:white; "
@@ -521,13 +527,15 @@ if st.session_state.page == "chat":
 
         # ── Working Hours ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>🕐 Working Hours</span>", unsafe_allow_html=True)
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown("**Every Day**")
-        with c2:
-            st.markdown("**9 AM – 9 PM**")
-        st.markdown("**Early opening & late closing** possible with prior appointment.", unsafe_allow_html=False)
-        st.markdown("_* Confirm timings while booking_")
+        # patch_compact2 — compact hours
+        st.markdown(
+            "<div style='font-size:0.82rem; line-height:1.6; margin:0.1rem 0;'>"
+            "<b>Every Day: 9 AM – 9 PM</b><br>"
+            "<span style='font-size:0.78rem;'>Early/late possible with prior appointment.<br>"
+            "<i>* Confirm timings while booking</i></span>"
+            "</div>",
+            unsafe_allow_html=True
+        )
 
         st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
@@ -551,15 +559,24 @@ if st.session_state.page == "chat":
 
         # ── Social Links ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>🌐 Follow & Review Us</span>", unsafe_allow_html=True)
-        st.link_button("📸 Instagram",
-                       "https://www.instagram.com/forever_21_beauty_studio?igsh=MWwxenQ0cHI1YmlidQ==",
-                       use_container_width=True)
-        st.link_button("👍 Facebook",
-                       "https://www.facebook.com/share/17J8yCJafA/",
-                       use_container_width=True)
-        st.link_button("⭐ Google Review",
-                       "https://share.google/nZogQL8Y5usCwPmWy",
-                       use_container_width=True)
+        # patch_compact2 — compact social links
+        st.markdown(
+            "<div style='display:flex; flex-direction:column; gap:0.3rem; margin:0.1rem 0;'>"
+            "<a href='https://www.instagram.com/forever_21_beauty_studio?igsh=MWwxenQ0cHI1YmlidQ==' "
+            "target='_blank' style='display:block; text-align:center; background:#E1306C; "
+            "color:white; border-radius:8px; padding:0.3rem; font-size:0.82rem; "
+            "font-weight:700; text-decoration:none;'>📸 Instagram</a>"
+            "<a href='https://www.facebook.com/share/17J8yCJafA/' "
+            "target='_blank' style='display:block; text-align:center; background:#1877F2; "
+            "color:white; border-radius:8px; padding:0.3rem; font-size:0.82rem; "
+            "font-weight:700; text-decoration:none;'>👍 Facebook</a>"
+            "<a href='https://share.google/nZogQL8Y5usCwPmWy' "
+            "target='_blank' style='display:block; text-align:center; background:#FBBC05; "
+            "color:#333; border-radius:8px; padding:0.3rem; font-size:0.82rem; "
+            "font-weight:700; text-decoration:none;'>⭐ Google Review</a>"
+            "</div>",
+            unsafe_allow_html=True
+        )
 
         st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
         st.markdown(
