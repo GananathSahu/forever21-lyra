@@ -141,6 +141,12 @@ div[data-testid="stButton"] button[kind="secondary"] {
 div[data-testid="stButton"] button[kind="secondary"]:hover {
     background: #fce4ec !important;
 }
+/* mobile_columns — reverse column order on mobile so chat appears first */
+@media (max-width: 768px) {
+    [data-testid='stHorizontalBlock'] {
+        flex-direction: column-reverse !important;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
