@@ -365,9 +365,6 @@ logo_b64 = load_logo()
 # ══════════════════════════════════════════════════════════════════════
 # TOP NAV
 # ══════════════════════════════════════════════════════════════════════
-if FESTIVAL_BANNER:
-    st.markdown(f"<div class='festival-banner'>🎉 {FESTIVAL_BANNER}</div>",
-                unsafe_allow_html=True)
 
 # ── Navigation moved to left panel (Session 5 Step 1) ──
 _page = st.session_state.page
@@ -576,6 +573,20 @@ if st.session_state.page == "chat":
 
     # ── RIGHT COLUMN ─────────────────────────────────────────────────
     with right:
+        # patch_layout2 — reordered: Header, Festival, Discount
+        # Header
+        st.markdown("""
+        <div class='lyra-header'>
+            <h1>✨ Forever 21 Beauty Studio</h1>
+            <p>Powered by Lyra AI • Your Personal Beauty Consultant</p>
+        </div>""", unsafe_allow_html=True)
+
+
+        # patch_layout2 — festival banner moved to right column
+        if FESTIVAL_BANNER:
+            st.markdown(f"<div class='festival-banner'>🎉 {FESTIVAL_BANNER}</div>",
+                        unsafe_allow_html=True)
+
         # patch_polish — discount moved here from full width
         st.markdown("""
 <div style='background:linear-gradient(135deg,#fff9fb,#fce4ec); border:2px solid #C2185B;
@@ -584,13 +595,6 @@ border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem
 📚 <b>Students</b> &nbsp;|👵 <b>Senior Citizens</b> &nbsp;|⏰ <b>Happy Hours</b> 12–4 PM &nbsp;|💍 <b>Packages</b> &nbsp;|🎉 <b>Special Occasions</b><br>
 <span style='color:#C2185B; font-size:0.78rem;'>Ask Lyra for details or call Bini Didi: +91 98531 15511</span>
 </div>""", unsafe_allow_html=True)
-
-        # Header
-        st.markdown("""
-        <div class='lyra-header'>
-            <h1>✨ Forever 21 Beauty Studio</h1>
-            <p>Powered by Lyra AI • Your Personal Beauty Consultant</p>
-        </div>""", unsafe_allow_html=True)
 
         # compact_welcome — v9.1
         st.markdown(
