@@ -732,26 +732,26 @@ border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem
                 st.session_state.lead_saved = False
                 st.rerun()
 
-        # ── Disclaimer ──
-        st.markdown(
-            "<div style='margin-top:1.5rem; padding:0.7rem 1rem; "
-            "background:#f9f9f9; border-radius:10px; "
-            "border-left:3px solid #C2185B; font-size:0.72rem; "
-            "color:#666; line-height:1.6;'>"
-            "<strong style='color:#8B3A62;'>📋 Disclaimer:</strong> "
-            "Lyra is an AI-powered virtual assistant for Forever 21 Beauty Studio. "
-            "The information provided is for general guidance only and may not always "
-            "be complete or fully up to date. For confirmed pricing, appointment "
-            "availability, and personalised recommendations, please speak directly "
-            "with Bini Didi at "
-            "<a href='tel:+919853115511' style='color:#C2185B;'>+91 98531 15511</a>."
-            "<br><br>"
-            "Your name and phone number shared in this chat are used solely to enable "
-            "Forever 21 Beauty Studio to contact you. We do not share your personal "
-            "details with any third party.</div>",
-            unsafe_allow_html=True
-        )
-
+        # disclaimer_conditional — show only when messages exist
+        if st.session_state.messages:
+            st.markdown(
+                "<div style='margin-top:1.5rem; padding:0.7rem 1rem; "
+                "background:#f9f9f9; border-radius:10px; "
+                "border-left:3px solid #C2185B; font-size:0.72rem; "
+                "color:#666; line-height:1.6;'>"
+                "<strong style='color:#8B3A62;'>📋 Disclaimer:</strong> "
+                "Lyra is an AI-powered virtual assistant for Forever 21 Beauty Studio. "
+                "The information provided is for general guidance only and may not always "
+                "be complete or fully up to date. For confirmed pricing, appointment "
+                "availability, and personalised recommendations, please speak directly "
+                "with Bini Didi at "
+                "<a href='tel:+919853115511' style='color:#C2185B;'>+91 98531 15511</a>."
+                "<br><br>"
+                "Your name and phone number shared in this chat are used solely to enable "
+                "Forever 21 Beauty Studio to contact you. We do not share your personal "
+                "details with any third party.</div>",
+                unsafe_allow_html=True
+            )
 # ══════════════════════════════════════════════════════════════════════
 # PAGE: GALLERY
 # ══════════════════════════════════════════════════════════════════════
