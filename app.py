@@ -355,7 +355,7 @@ def parse_date(ts):
 # ── Session state ───────────────────────────────────────────────────────────────
 for key, val in [("messages", []), ("lead_saved", False),
                  ("admin_logged_in", False), ("page", "chat"),
-                 ("_lyra_thinking", False), ("_pending_input", None)]:
+                 ("_lyra_thinking", False), ("_pending_input", None), ("_scroll_top", False)]:
     if key not in st.session_state:
         st.session_state[key] = val
 
@@ -408,19 +408,19 @@ if st.session_state.page == "chat":
         )
         st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
         # ── Nav buttons ──
-        _lnav1, _lnav2, _lnav3 = st.columns(3)
+        # nav_v2_done — 2 buttons
+        _lnav1, _lnav2 = st.columns(2)
         with _lnav1:
             if st.button("💬 Chat", use_container_width=True, key="nav_chat",
                          type="primary" if _page=="chat" else "secondary"):
-                st.session_state.page = "chat"; st.rerun()
+                st.session_state.page = "chat"
+                st.session_state["_scroll_top"] = True
+                st.session_state["_scroll_top"] = True
+                st.rerun()
         with _lnav2:
             if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery",
                          type="primary" if _page=="gallery" else "secondary"):
                 st.session_state.page = "gallery"; st.rerun()
-        with _lnav3:
-            if st.button("Dashboard", use_container_width=True, key="nav_admin",
-                         type="primary" if _page=="admin" else "secondary"):
-                st.session_state.page = "admin"; st.rerun()
         st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
 
@@ -597,9 +597,32 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
 
+        # subtle admin — nav_v2_done
+        if st.button("admin", key="nav_admin_bottom",
+                     type="secondary", use_container_width=False):
+            st.session_state.page = "admin"; st.rerun()
+
 
     # ── RIGHT COLUMN ─────────────────────────────────────────────────
     with right:
+        # chat_scroll_v2 — scroll main container to top
+        if st.session_state.get('_scroll_top'):
+            st.session_state['_scroll_top'] = False
+            st.markdown(
+                "<script>"
+                "(function(){"
+                "var els=['section.main','[data-testid=stAppViewContainer]',"
+                "'[data-testid=stVerticalBlock]'];"
+                "els.forEach(function(s){"
+                "var e=window.parent.document.querySelector(s);"
+                "if(e){e.scrollTop=0;e.scrollTo(0,0);}"
+                "});"
+                "window.parent.scrollTo(0,0);"
+                "window.scrollTo(0,0);"
+                "})()"
+                "</script>",
+                unsafe_allow_html=True
+            )
         # patch_layout2 — reordered: Header, Festival, Discount
         # Header
         st.markdown("""
@@ -748,7 +771,8 @@ elif st.session_state.page == "gallery":
             )
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
         # ── Nav buttons ──
-        _lnav1, _lnav2, _lnav3 = st.columns(3)
+        # nav_v2_done — 2 buttons
+        _lnav1, _lnav2 = st.columns(2)
         with _lnav1:
             if st.button("💬 Chat", use_container_width=True, key="nav_chat_g",
                          type="primary" if _page=="chat" else "secondary"):
@@ -757,10 +781,6 @@ elif st.session_state.page == "gallery":
             if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery_g",
                          type="primary" if _page=="gallery" else "secondary"):
                 st.session_state.page = "gallery"; st.rerun()
-        with _lnav3:
-            if st.button("Dashboard", use_container_width=True, key="nav_admin_g",
-                         type="primary" if _page=="admin" else "secondary"):
-                st.session_state.page = "admin"; st.rerun()
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
     with right_gallery:
             st.markdown("""
@@ -855,7 +875,8 @@ elif st.session_state.page == "admin":
             )
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
         # ── Nav buttons ──
-        _lnav1, _lnav2, _lnav3 = st.columns(3)
+        # nav_v2_done — 2 buttons
+        _lnav1, _lnav2 = st.columns(2)
         with _lnav1:
             if st.button("💬 Chat", use_container_width=True, key="nav_chat_a",
                          type="primary" if _page=="chat" else "secondary"):
@@ -864,10 +885,6 @@ elif st.session_state.page == "admin":
             if st.button("🖼️ Gallery", use_container_width=True, key="nav_gallery_a",
                          type="primary" if _page=="gallery" else "secondary"):
                 st.session_state.page = "gallery"; st.rerun()
-        with _lnav3:
-            if st.button("Dashboard", use_container_width=True, key="nav_admin_a",
-                         type="primary" if _page=="admin" else "secondary"):
-                st.session_state.page = "admin"; st.rerun()
         st.markdown("<hr style='margin:0.2rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
     with right_admin:
             st.markdown("""
