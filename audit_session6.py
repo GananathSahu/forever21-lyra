@@ -107,7 +107,7 @@ for term, msg in checks4_app:
 # SECTION 5: SYSTEM PROMPT — VERSION AND STRUCTURE
 print("\n\u2500\u2500 SECTION 5: SYSTEM PROMPT \u2014 VERSION & STRUCTURE \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
 checks5_version = [
-    ("System Prompt Version: 6.0", "System prompt version 6.0"),
+    ("System Prompt Version: 6.2", "System prompt version 6.0"),
     ("MUST ALWAYS be written in English", "English-only tagline rule"),
     ("NEVER translate the tagline", "Tagline never translated rule"),
     ("ODIA CONFIRMATION", "Odia confirmation rule"),
