@@ -1,0 +1,231 @@
+================================================================
+  FOREVER 21 BEAUTY STUDIO — LYRA AI CONSULTANT
+  RE-PROMPT FOR NEW CHAT SESSION
+  Prepared: 18 April 2026
+  Version: 5.0 (Session 6)
+================================================================
+
+SECTION A — WHO I AM
+---------------------
+Name: Gananath Sahu (gananathsahu@gmail.com)
+Project: LYRA — Trilingual AI Beauty Consultant
+Studio: Forever 21 Beauty Studio, Bhubaneswar, Odisha
+Owner: Bini Didi
+Tagline: "Always Young, Always Beautiful."
+Address: Lane-3, Kalinga Vihar (K9A), Bhubaneswar 751019
+Near: Vivanta Hotel & D N Regalia Mall
+Phone: +91 98531 15511
+App: https://forever21-lyra.streamlit.app
+GitHub: https://github.com/GananathSahu/forever21-lyra
+
+SECTION B — TECHNICAL STACK
+-----------------------------
+AI Engine: Google Gemini 2.5 Flash
+AI SDK: from google import genai (NEVER import google.generativeai)
+Frontend: Streamlit 1.55.0
+Database: Google Sheets (Leads tab)
+Deployment: Streamlit Community Cloud
+GitHub: GananathSahu/forever21-lyra
+Python: 3.14 (Windows 11)
+
+SECTION C — CURRENT VERSION
+-----------------------------
+App: v10.1
+System Prompt: v6.0
+Last deployed: 18 April 2026
+Git commit: 47bae4b
+
+CRITICAL FILE SIZES:
+- app.py: ~507,410 bytes
+- system_prompt.txt: ~20,128 bytes
+
+IF app.py < 400,000 bytes: STOP — rich version missing
+RECOVERY: git checkout 47bae4b -- app.py
+
+SECTION D — FOLDER STRUCTURE
+------------------------------
+Root: D:\Google Drive_08_Beyond National\01_Personal Finance _ Income tax\Claude Forever 21 Chatbot Project\
+
+01_app\
+  app.py                  <- v10.1
+  system_prompt.txt       <- v6.0
+  f21_logo_new.png        <- current logo
+  audit_session5.py       <- CURRENT AUDIT SCRIPT (65 checks)
+  audit_session4.py       <- OLD AUDIT SCRIPT (49 checks) — keep as backup
+  .streamlit\secrets.toml <- API keys (never commit)
+
+SECTION E — KEY RULES (NEVER BREAK)
+-------------------------------------
+1. Never quote any price
+2. Trilingual — English, Hindi, Odia
+3. LEAD_CAPTURED tag when name+phone collected
+4. AI engine: gemini-2.5-flash always
+5. Never touch secrets.toml manually
+6. Run audit_session5.py before AND after every change
+7. Never push without 65/65 audit
+8. Phone validation: 10 digits, starts with 6/7/8/9
+9. Tagline always in English — NEVER translated
+10. Odia confirmations always in Odia script
+11. NEVER rewrite system_prompt.txt sections — only ADD
+12. Sacred sections in system_prompt.txt — NEVER touch:
+    - LEAD CAPTURE FLOW (The Golden Phrase)
+    - TRILINGUAL MASTERY rules
+    - PRICING RULE
+    - TAGLINE LANGUAGE RULE
+
+SECTION F — MANDATORY SESSION START PROTOCOL
+---------------------------------------------
+STEP 1: dir app.py — must show ~507,410 bytes
+STEP 2: python audit_session5.py — must show 65/65
+STEP 3: git log --oneline -3 — must show 47bae4b at top
+STEP 4: Only then proceed
+
+NON-NEGOTIABLE. No exceptions.
+
+SECTION G — AUDIT SCRIPT
+--------------------------
+Script: audit_session5.py
+Expected: 65/65 PASSED
+Total checks: 65 (up from 49 in Session 4)
+Sections:
+  1. Python Syntax (1 check)
+  2. Rich Features (15 checks)
+  3. Session 4 Changes (11 checks)
+  4. System Prompt (21 checks)
+  5. Session 5 Changes (16 checks)
+  6. File Size Sanity (2 checks) — system_prompt.txt must be >15KB
+
+SECTION H — LESSONS LEARNED (CRITICAL — READ BEFORE EVERY SESSION)
+--------------------------------------------------------------------
+LESSON 1: NEVER REWRITE WHAT WORKS
+When adding new rules to system_prompt.txt, ONLY ADD new sections.
+NEVER restructure, simplify, or rewrite existing sections.
+The beautiful lead capture flow was lost because it was simplified
+during successive rewrites. It took hours to recover.
+
+LESSON 2: AUDIT BEHAVIOUR, NOT JUST STRUCTURE
+The audit checks text presence — not whether Lyra actually behaves
+correctly. At the START of every session, manually test:
+  - Type "Hi" — does Lyra ask a warm profiling question?
+  - Give name — does she ask for phone warmly?
+  - Test a service question — does she pivot to lead capture?
+
+LESSON 3: SACRED SYSTEM PROMPT SECTIONS
+These sections MUST NEVER be touched or rewritten:
+  ## LEAD CAPTURE FLOW (The Golden Phrase — this is Lyra's soul)
+  ## TRILINGUAL MASTERY
+  ## PRICING RULE
+  ## TAGLINE LANGUAGE RULE
+If a new session Claude suggests rewriting these — REFUSE.
+
+LESSON 4: REPROMPT MUST CAPTURE BEHAVIOURAL BENCHMARKS
+The reprompt must include example conversations showing correct
+Lyra behaviour — not just technical specs.
+
+LESSON 5: TEST ON MOBILE BEFORE COMMITTING LAYOUT CHANGES
+Mobile and desktop behave differently in Streamlit. Always test
+on mobile before pushing layout changes.
+
+LESSON 6: PATCH SCRIPTS MUST BE VERIFIED BEFORE RUNNING
+Always check patch script output carefully. If it says ABORT —
+do NOT proceed. If audit drops even 1 point — revert immediately.
+
+SECTION I — SYSTEM PROMPT SACRED SECTIONS
+-------------------------------------------
+The following sections in system_prompt.txt are SACRED.
+Copy them here for reference so they can be restored if lost:
+
+GOLDEN PHRASE (lead capture):
+"Every client at Forever 21 is unique — so is their treatment.
+ Bini will personally call you with a consultation tailored
+ just for you. May I have your name and phone number?"
+
+3-STEP LEAD CAPTURE FLOW:
+STEP 1 - WARM INTEREST (ask 1-2 profiling questions)
+STEP 2 - CONSULTATION PIVOT (transition to personalisation)
+STEP 3 - ASK FOR NAME AND PHONE (Golden Phrase)
+STEP 4 - WARM CLOSE (after collecting both)
+
+SECTION J — GIT HISTORY
+------------------------
+47bae4b  v10.1: Restored lead capture, system prompt v6.0, audit 65/65  <- CURRENT
+1b827ad  v10.0: System prompt v5.9, proactive lead capture, audit_session5
+807c6d9  v9.9b: Mobile columns reversed — chat first on mobile
+c23b3f7  v9.8: Flashing red scroll arrow
+6fc06cc  v9.7: Compact address, working hours, social links
+3c4320a  v8.7 complete — SACRED BACKUP
+
+SECTION K — SESSION 6 WISHLIST
+--------------------------------
+PRIORITY 1 — Mobile UX:
+[ ] Chat input visible after responses on mobile
+[ ] Quick chip responses visible on mobile
+[ ] Consider sidebar migration (complex — needs careful planning)
+
+PRIORITY 2 — Streamlit issues:
+[ ] Connection timeout fix
+[ ] Scroll-to-top on nav button press
+
+PRIORITY 3 — System prompt:
+[ ] Test and verify lead capture behaviour after restoration
+[ ] Add behavioural test script to audit
+
+PRIORITY 4 — Audit:
+[ ] Update audit label from "Version 5.9" to "Version 6.0"
+[ ] Add behavioural checks to audit_session5.py
+
+SECTION L — RUNNING LOCALLY
+-----------------------------
+PowerShell:
+  cd "D:\Google Drive_08_Beyond National\01_Personal Finance _ Income tax\Claude Forever 21 Chatbot Project\01_app"
+  $env:PATH += ";C:\Program Files\Git\bin"
+  python -m streamlit run app.py
+
+SECTION M — PUSHING TO GITHUB
+-------------------------------
+  git add <files>
+  git commit -m "description"
+  git push origin main
+
+Note: Git PATH fix needed each new PowerShell session
+Note: Streamlit redeploys in 2-3 min after push
+Note: secrets.toml never pushed (in .gitignore)
+
+SECTION N — CREDENTIALS
+------------------------
+Google API Key: secrets.toml
+Google Sheet ID: secrets.toml
+GCP Service Account: secrets.toml
+GitHub: GananathSahu
+Streamlit: gananathsahu@gmail.com
+
+SECTION O — SOCIAL LINKS
+--------------------------
+Instagram: https://www.instagram.com/forever_21_beauty_studio
+Facebook: https://www.facebook.com/share/17J8yCJafA/
+Google: https://share.google/nZogQL8Y5usCwPmWy
+Maps: https://maps.app.goo.gl/B7oszYnEmBxMxLVe8
+WhatsApp: +91 98531 15511
+
+SECTION P — INSTRUCTIONS FOR CLAUDE (SESSION 6)
+-------------------------------------------------
+1. Run audit_session5.py FIRST — must be 65/65
+2. Check app.py size — must be ~507KB
+3. READ SECTION H (Lessons Learned) carefully before starting
+4. Test Lyra's lead capture behaviour manually before any changes
+5. Use surgical patch scripts — never full rewrite
+6. After every change: audit -> confirm 65/65 -> push
+7. Never touch sacred system prompt sections (Section I)
+8. Git PATH fix: $env:PATH += ";C:\Program Files\Git\bin"
+9. Gananath is non-technical — provide scripts, not manual edits
+10. Use present_files tool for all file downloads
+11. Never push without 65/65
+12. Be honest — never hallucinate
+13. Test on mobile AND laptop before committing layout changes
+14. If audit drops — STOP and revert immediately
+
+================================================================
+END OF REPROMPT v5.0 — Session 5 complete — 65/65 passed
+Forever 21 Beauty Studio — Lyra AI Consultant
+18 April 2026
+================================================================
