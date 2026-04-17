@@ -363,7 +363,7 @@ def parse_date(ts):
 # ── Session state ───────────────────────────────────────────────────────────────
 for key, val in [("messages", []), ("lead_saved", False),
                  ("admin_logged_in", False), ("page", "chat"),
-                 ("_lyra_thinking", False), ("_pending_input", None), ("_scroll_top", False)]:
+                 ("_lyra_thinking", False), ("_pending_input", None), ("_scroll_top", False), ("_chip_responded", False)]:
     if key not in st.session_state:
         st.session_state[key] = val
 
@@ -455,17 +455,7 @@ if st.session_state.page == "chat":
                     st.session_state.chip_question = question
                     st.rerun()
 
-        # chip_indicator — show reply indicator after chip response
-        if st.session_state.messages:
-            st.markdown(
-                "<div style='text-align:center; padding:0.3rem 0; "
-                "background:linear-gradient(135deg,#fff9fb,#fce4ec); "
-                "border-radius:8px; margin-top:0.3rem;'>"
-                "<span style='color:#C2185B; font-size:0.85rem; font-weight:700;'>"
-                "💬 Lyra replied! See response on the right →"
-                "</span></div>",
-                unsafe_allow_html=True
-            )
+        # chip_indicator_removed
 
 
         # ── Service Explorer ──
