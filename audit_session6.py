@@ -100,6 +100,7 @@ checks4_app = [
     ("patch_compact2", "Left panel compacted"),
     ("mobile_columns", "Mobile column order CSS"),
     ("disclaimer_conditional", "Disclaimer conditional on messages"),
+    ("ist_timezone", "IST timezone fix for timestamps"),
 ]
 for term, msg in checks4_app:
     ok(msg) if term in app else fail(msg)
