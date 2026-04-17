@@ -492,7 +492,7 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
 
-        st.markdown("<hr style='margin:0.1rem 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
+        st.markdown("<hr style='margin:0 0; border-color:rgba(139,58,98,0.15);'>", unsafe_allow_html=True)
 
         # ── Contact ──
         st.markdown("<span style='color:#C2185B; font-weight:700; font-size:0.88rem; display:block; margin-top:0.1rem; margin-bottom:0.1rem;'>📞 Contact Us</span>", unsafe_allow_html=True)
@@ -500,10 +500,20 @@ if st.session_state.page == "chat":
             "<div style='text-align:center; background:#C2185B; "
             "color:white; border-radius:10px; padding:0.5rem; "
             "font-weight:900; font-size:1rem; letter-spacing:1px; "
-            "margin:0.3rem 0;'>"
+            "margin:0.1rem 0;'>"
             "<a href='tel:+919853115511' "
             "style='color:white; text-decoration:none;'>"
             "📱 +91 98531 15511</a></div>",
+            unsafe_allow_html=True
+        )
+        # arrow_final2 — scroll indicator at visible cutoff
+        st.markdown(
+            "<div class='scroll-arrow' style='padding:0.15rem 0; "
+            "font-size:2rem; color:#C2185B; font-weight:900; line-height:1;'>"
+            "▼ ▼ "
+            "<span style='font-size:1.2rem; font-weight:900; "
+            "vertical-align:middle; color:#C2185B; letter-spacing:1px;'>more info below</span><!-- arrow_text_big --> "
+            "▼ ▼</div><!-- arrow_flash arrow_polish arrow_red arrow_thick -->",
             unsafe_allow_html=True
         )
         wa_messages = {
