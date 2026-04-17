@@ -88,7 +88,7 @@ for term, msg in checks3:
 # ── SECTION 4: SYSTEM PROMPT ──────────────────────────────────
 print("\n── SECTION 4: SYSTEM PROMPT ──────────────────────────────")
 checks4 = [
-    ("System Prompt Version: 5.9", "Version 5.9"),
+    ("System Prompt Version: 6.0", "Version 5.9"),
     ("MUST ALWAYS be written in English", "English-only tagline rule"),
     ("NEVER translate the tagline", "Tagline never translated rule"),
     ("Always Young, Always Beautiful.**", "Hindi greeting uses English tagline"),
