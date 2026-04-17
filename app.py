@@ -3,7 +3,7 @@ import streamlit as st
 import re
 import base64
 import hashlib
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import gspread
 from google.oauth2.service_account import Credentials
 from google import genai
@@ -314,7 +314,9 @@ def get_sheet():
 def save_lead_to_sheet(name, phone, source="Website"):
     try:
         sheet = get_sheet()
-        sheet.append_row([datetime.now().strftime("%d-%m-%Y %H:%M"),
+        # ist_timezone — convert UTC to IST (UTC+5:30)
+        _ist = datetime.utcnow() + timedelta(hours=5, minutes=30)
+        sheet.append_row([_ist.strftime("%d-%m-%Y %H:%M"),
                           name, phone, "New Lead", source])
         return True
     except Exception as e:
