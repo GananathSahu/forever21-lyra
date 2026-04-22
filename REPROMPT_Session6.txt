@@ -30,17 +30,17 @@ Python: 3.14 (Windows 11)
 
 SECTION C — CURRENT VERSION
 -----------------------------
-App: v10.1
-System Prompt: v6.0
+App: v10.6
+System Prompt: v6.2
 Last deployed: 18 April 2026
-Git commit: 47bae4b
+Git commit: 4c1f79e
 
 CRITICAL FILE SIZES:
-- app.py: ~507,410 bytes
+- app.py: ~507,596 bytes
 - system_prompt.txt: ~20,128 bytes
 
 IF app.py < 400,000 bytes: STOP — rich version missing
-RECOVERY: git checkout 47bae4b -- app.py
+RECOVERY: git checkout 4c1f79e -- app.py
 
 SECTION D — FOLDER STRUCTURE
 ------------------------------
@@ -50,7 +50,7 @@ Root: D:\Google Drive_08_Beyond National\01_Personal Finance _ Income tax\Claude
   app.py                  <- v10.1
   system_prompt.txt       <- v6.0
   f21_logo_new.png        <- current logo
-  audit_session5.py       <- CURRENT AUDIT SCRIPT (65 checks)
+  audit_session6.py       <- CURRENT AUDIT SCRIPT (65 checks)
   audit_session4.py       <- OLD AUDIT SCRIPT (49 checks) — keep as backup
   .streamlit\secrets.toml <- API keys (never commit)
 
@@ -61,8 +61,8 @@ SECTION E — KEY RULES (NEVER BREAK)
 3. LEAD_CAPTURED tag when name+phone collected
 4. AI engine: gemini-2.5-flash always
 5. Never touch secrets.toml manually
-6. Run audit_session5.py before AND after every change
-7. Never push without 65/65 audit
+6. Run audit_session6.py before AND after every change
+7. Never push without 72/72 audit
 8. Phone validation: 10 digits, starts with 6/7/8/9
 9. Tagline always in English — NEVER translated
 10. Odia confirmations always in Odia script
@@ -75,17 +75,17 @@ SECTION E — KEY RULES (NEVER BREAK)
 
 SECTION F — MANDATORY SESSION START PROTOCOL
 ---------------------------------------------
-STEP 1: dir app.py — must show ~507,410 bytes
-STEP 2: python audit_session5.py — must show 65/65
-STEP 3: git log --oneline -3 — must show 47bae4b at top
+STEP 1: dir app.py — must show ~507,596 bytes
+STEP 2: python audit_session6.py — must show 72/72
+STEP 3: git log --oneline -3 — must show 4c1f79e at top
 STEP 4: Only then proceed
 
 NON-NEGOTIABLE. No exceptions.
 
 SECTION G — AUDIT SCRIPT
 --------------------------
-Script: audit_session5.py
-Expected: 65/65 PASSED
+Script: audit_session6.py
+Expected: 72/72 PASSED
 Total checks: 65 (up from 49 in Session 4)
 Sections:
   1. Python Syntax (1 check)
@@ -148,8 +148,8 @@ STEP 4 - WARM CLOSE (after collecting both)
 
 SECTION J — GIT HISTORY
 ------------------------
-47bae4b  v10.1: Restored lead capture, system prompt v6.0, audit 65/65  <- CURRENT
-1b827ad  v10.0: System prompt v5.9, proactive lead capture, audit_session5
+4c1f79e  v10.1: Restored lead capture, system prompt v6.2, audit 72/72  <- CURRENT
+1b827ad  v10.0: System prompt v5.9, proactive lead capture, audit_session6
 807c6d9  v9.9b: Mobile columns reversed — chat first on mobile
 c23b3f7  v9.8: Flashing red scroll arrow
 6fc06cc  v9.7: Compact address, working hours, social links
@@ -162,17 +162,20 @@ PRIORITY 1 — Mobile UX:
 [ ] Quick chip responses visible on mobile
 [ ] Consider sidebar migration (complex — needs careful planning)
 
-PRIORITY 2 — Streamlit issues:
+PRIORITY 2 — Gallery:
+[ ] Bini Didi real before/after photos
+
+PRIORITY 3 — Streamlit issues:
 [ ] Connection timeout fix
 [ ] Scroll-to-top on nav button press
 
-PRIORITY 3 — System prompt:
+PRIORITY 4 — System prompt:
 [ ] Test and verify lead capture behaviour after restoration
 [ ] Add behavioural test script to audit
 
-PRIORITY 4 — Audit:
+PRIORITY 5 — Audit:
 [ ] Update audit label from "Version 5.9" to "Version 6.0"
-[ ] Add behavioural checks to audit_session5.py
+[ ] Add behavioural checks to audit_session6.py
 
 SECTION L — RUNNING LOCALLY
 -----------------------------
@@ -209,23 +212,23 @@ WhatsApp: +91 98531 15511
 
 SECTION P — INSTRUCTIONS FOR CLAUDE (SESSION 6)
 -------------------------------------------------
-1. Run audit_session5.py FIRST — must be 65/65
+1. Run audit_session6.py FIRST — must be 72/72
 2. Check app.py size — must be ~507KB
 3. READ SECTION H (Lessons Learned) carefully before starting
 4. Test Lyra's lead capture behaviour manually before any changes
 5. Use surgical patch scripts — never full rewrite
-6. After every change: audit -> confirm 65/65 -> push
+6. After every change: audit -> confirm 72/72 -> push
 7. Never touch sacred system prompt sections (Section I)
 8. Git PATH fix: $env:PATH += ";C:\Program Files\Git\bin"
 9. Gananath is non-technical — provide scripts, not manual edits
 10. Use present_files tool for all file downloads
-11. Never push without 65/65
+11. Never push without 72/72
 12. Be honest — never hallucinate
 13. Test on mobile AND laptop before committing layout changes
 14. If audit drops — STOP and revert immediately
 
 ================================================================
-END OF REPROMPT v5.0 — Session 5 complete — 65/65 passed
+END OF REPROMPT v5.0 — Session 5 complete — 72/72 passed
 Forever 21 Beauty Studio — Lyra AI Consultant
 18 April 2026
 ================================================================
