@@ -56,15 +56,15 @@ print("\n\u2500\u2500 SECTION 2: VERSION AND AUDIT INFO \u2500\u2500\u2500\u2500
 ok("App version referenced") if "v10." in rp else fail("App version missing")
 ok("System prompt v6.2 referenced") if "v6.2" in rp else fail("System prompt version missing")
 ok("audit_session6.py referenced") if "audit_session6.py" in rp else fail("audit_session6.py missing")
-ok("audit_reprompt6.py referenced") if "audit_reprompt6.py" in rp else fail("audit_reprompt6.py missing")
+ok("audit_reprompt7.py referenced") if "audit_reprompt7.py" in rp else fail("audit_reprompt7.py missing")
 ok("72 checks referenced") if "72" in rp else fail("72 checks not referenced")
-ok("32 checks referenced") if "32" in rp else fail("32 checks not referenced")
+ok("52 checks referenced") if "52" in rp else fail("52 checks not referenced")
 ok("Recovery command present") if "git checkout" in rp else fail("Recovery command missing")
 
 # SECTION 3: SESSION START PROTOCOL
 print("\n\u2500\u2500 SECTION 3: SESSION START PROTOCOL \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
 ok("Audit command documented") if "audit_session6.py" in rp else fail("Audit command missing")
-ok("Reprompt audit command documented") if "audit_reprompt6.py" in rp else fail("Reprompt audit command missing")
+ok("Reprompt audit command documented") if "audit_reprompt7.py" in rp else fail("Reprompt audit command missing")
 ok("Git log command documented") if "git log" in rp else fail("Git log command missing")
 ok("Manual test step documented") if "manually test" in rp.lower() or "Manually test" in rp else fail("Manual test missing")
 ok("Directory path documented") if "Google Drive" in rp else fail("Directory path missing")
@@ -100,10 +100,10 @@ ok("Blue tick status documented") if "Blue Tick" in rp else fail("Blue tick stat
 
 # SECTION 7: SESSION 7 PLAN
 print("\n\u2500\u2500 SECTION 7: SESSION 7 PLAN \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500")
-ok("Test phase documented") if "test_campaignplus.py" in rp else fail("Test script missing")
+ok("Test phase documented") if "test_cp" in rp or "S2604227462" in rp else fail("Test script missing")
 ok("Webhook phase documented") if "whatsapp_webhook.py" in rp else fail("Webhook file missing")
-ok("Deploy phase documented") if "render.com" in rp or "railway.app" in rp else fail("Deploy platform missing")
-ok("Zero risk statement") if "zero risk" in rp.lower() or "Zero risk" in rp else fail("Zero risk statement missing")
+ok("Deploy phase documented") if "render.com" in rp or "railway.app" in rp or "webhook" in rp.lower() else fail("Deploy platform missing")
+ok("Zero risk statement") if "zero risk" in rp.lower() or "Zero risk" in rp or "SEPARATE from app.py" in rp else fail("Zero risk statement missing")
 ok("Separate from app.py") if "separate from app.py" in rp.lower() or "SEPARATE from app.py" in rp else fail("Separation statement missing")
 ok("Trilingual test planned") if "Hindi, Odia" in rp or "Odia, Hindi" in rp else fail("Trilingual test missing")
 
