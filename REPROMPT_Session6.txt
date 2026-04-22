@@ -33,14 +33,14 @@ SECTION C — CURRENT VERSION
 App: v10.6
 System Prompt: v6.2
 Last deployed: 18 April 2026
-Git commit: 46472d7
+Git commit: 61859d9
 
 CRITICAL FILE SIZES:
 - app.py: ~507,596 bytes
 - system_prompt.txt: ~20,128 bytes
 
 IF app.py < 400,000 bytes: STOP — rich version missing
-RECOVERY: git checkout 46472d7 -- app.py
+RECOVERY: git checkout 61859d9 -- app.py
 
 SECTION D — FOLDER STRUCTURE
 ------------------------------
@@ -77,7 +77,7 @@ SECTION F — MANDATORY SESSION START PROTOCOL
 ---------------------------------------------
 STEP 1: dir app.py — must show ~507,596 bytes
 STEP 2: python audit_session6.py — must show 72/72
-STEP 3: git log --oneline -3 — must show 46472d7 at top
+STEP 3: git log --oneline -3 — must show 61859d9 at top
 STEP 4: Only then proceed
 
 NON-NEGOTIABLE. No exceptions.
@@ -148,7 +148,7 @@ STEP 4 - WARM CLOSE (after collecting both)
 
 SECTION J — GIT HISTORY
 ------------------------
-46472d7  v10.1: Restored lead capture, system prompt v6.2, audit 72/72  <- CURRENT
+61859d9  v10.1: Restored lead capture, system prompt v6.2, audit 72/72  <- CURRENT
 1b827ad  v10.0: System prompt v5.9, proactive lead capture, audit_session6
 807c6d9  v9.9b: Mobile columns reversed — chat first on mobile
 c23b3f7  v9.8: Flashing red scroll arrow
