@@ -1,0 +1,223 @@
+================================================================
+  FOREVER 21 BEAUTY STUDIO — LYRA AI CONSULTANT
+  RE-PROMPT FOR SESSION 7
+  Prepared: 22 April 2026
+  Version: 7.0
+================================================================
+
+SECTION A — WHO I AM
+---------------------
+Name: Gananath Sahu (gananathsahu@gmail.com)
+Project: LYRA — Trilingual AI Beauty Consultant
+Studio: Forever 21 Beauty Studio, Bhubaneswar, Odisha
+Owner: Bini Didi
+Tagline: "Always Young, Always Beautiful."
+Address: Lane-3, Kalinga Vihar (K9A), Bhubaneswar 751019
+Near: Vivanta Hotel & D N Regalia Mall
+Phone: +91 98531 15511
+App: https://forever21-lyra.streamlit.app
+GitHub: https://github.com/GananathSahu/forever21-lyra
+
+SECTION B — TECHNICAL STACK
+-----------------------------
+AI Engine: Google Gemini 2.5 Flash
+Frontend: Streamlit 1.55.0
+Database: Google Sheets (Leads tab)
+Deployment: Streamlit Community Cloud
+Python: 3.14 (Windows 11)
+
+SECTION C — CURRENT VERSION
+-----------------------------
+App: v10.7d (approximately — check git log)
+System Prompt: v6.2
+Audit script: audit_session6.py — 72 checks
+Reprompt audit: audit_reprompt6.py — 32 checks
+
+CRITICAL FILE SIZES:
+- app.py: ~507,596 bytes
+- system_prompt.txt: ~20,896 bytes
+
+RECOVERY: git checkout 4c1f79e -- app.py (last known stable)
+
+SECTION D — MANDATORY SESSION START PROTOCOL
+---------------------------------------------
+STEP 1: cd to 01_app folder
+STEP 2: python audit_session6.py — must show 72/72
+STEP 3: python audit_reprompt6.py — must show 32/32
+STEP 4: git log --oneline -3 — note current HEAD
+STEP 5: Manually test Lyra (Section I)
+STEP 6: Only then proceed
+
+NON-NEGOTIABLE. No exceptions.
+
+SECTION E — KEY RULES (NEVER BREAK)
+-------------------------------------
+1. Never quote any price
+2. Trilingual — English, Hindi, Odia
+3. LEAD_CAPTURED tag when name+phone collected
+4. AI engine: gemini-2.5-flash always
+5. Run audit_session6.py before AND after every change
+6. Never push without 72/72 audit
+7. Phone validation: 10 digits, starts with 6/7/8/9
+8. Tagline always in English — NEVER translated
+9. NEVER rewrite system_prompt.txt sections — only ADD
+10. Sacred sections — NEVER touch:
+    - LEAD CAPTURE FLOW (The Golden Phrase)
+    - TRILINGUAL MASTERY rules
+    - PRICING RULE
+    - TAGLINE LANGUAGE RULE
+11. Always create .py script files — never inline PowerShell Python
+12. Never push without 72/72
+13. Test mobile AND laptop before committing layout changes
+14. If audit drops — STOP and revert immediately
+15. Only commit REPROMPT when meaningful content changes
+
+SECTION F — SACRED SECTIONS
+-----------------------------
+GOLDEN PHRASE — NEVER CHANGE:
+"Every client at Forever 21 is unique — so is their treatment.
+ Bini will personally call you with a consultation tailored
+ just for you. May I have your name and phone number?"
+
+4-STEP LEAD CAPTURE FLOW — NEVER CHANGE:
+STEP 1 - WARM INTEREST (profiling questions)
+STEP 2 - CONSULTATION PIVOT
+STEP 3 - ASK FOR NAME AND PHONE (Golden Phrase)
+STEP 4 - WARM CLOSE
+
+SECTION G — LESSONS LEARNED
+-----------------------------
+LESSON 1: NEVER REWRITE — only ADD to system_prompt.txt
+LESSON 2: AUDIT BEHAVIOUR manually at start of every session
+LESSON 3: SACRED SECTIONS — never touch
+LESSON 4: AUDIT THE REPROMPT using audit_reprompt6.py
+LESSON 5: TEST MOBILE AND LAPTOP before committing
+LESSON 6: PATCH SCRIPTS only — never inline PowerShell Python
+LESSON 7: ONE RECOMMENDATION — think fully before recommending
+LESSON 8: REPROMPT only committed for meaningful content changes
+
+SECTION H — SESSION 7 PRIMARY OBJECTIVE
+-----------------------------------------
+CampaignPlus WhatsApp Integration — Lyra on WhatsApp
+
+Goal: Customers can chat with Lyra directly on WhatsApp.
+Same intelligence, same lead capture, trilingual.
+Completely separate from Streamlit app — zero risk to current app.
+
+SECTION I — CAMPAIGNPLUS DETAILS
+----------------------------------
+Platform: CampaignPlus (Official WhatsApp BSP)
+Login URL: https://crm.campaignplus.in
+Business Email: Mailtobinodini@gmail.com
+Plan: API Quarterly (Active through June 15, 2026)
+WhatsApp number: +91 98531 15511 (Forever 21 business profile)
+Blue Tick: Not active (instance-based — faster non-templated messaging)
+Broadcasts: Active and working ✅
+Google Sheet: Still updating correctly ✅
+
+API Details (store in secrets.toml — never in code):
+- API Key: Ask Gananath — stored securely
+- API Endpoint: https://app.campaignplus.in/api/v1/send
+- Webhook: Not required for outbound notifications
+
+Message Templates (ready to use):
+1. Customer acknowledgement:
+   "Namaskar! Thank you for contacting Forever 21 Beauty Studio.
+    Bini Didi will call you shortly! 🌸"
+2. Bini Didi notification:
+   "New Lead! Name: {name}, Phone: {phone}. Please call them."
+
+SECTION J — SESSION 7 PLAN
+-----------------------------
+PHASE 1 — Test API (no app changes):
+[ ] Run test_campaignplus.py — send test message to Gananath
+[ ] Verify delivery on WhatsApp
+[ ] Confirm API key and endpoint are correct
+
+PHASE 2 — Build WhatsApp webhook (separate Python file):
+[ ] New file: whatsapp_webhook.py
+[ ] Receives incoming messages from CampaignPlus
+[ ] Passes to Gemini (same as current Lyra)
+[ ] Returns response via CampaignPlus API
+[ ] Saves leads to Google Sheet
+
+PHASE 3 — Deploy webhook:
+[ ] Deploy on render.com or railway.app (free tier)
+[ ] Connect webhook URL to CampaignPlus
+[ ] Test end to end
+
+PHASE 4 — Test thoroughly:
+[ ] English, Hindi, Odia messages
+[ ] Lead capture working
+[ ] Bini Didi notification working
+[ ] Google Sheet updating
+
+IMPORTANT: This is completely separate from app.py.
+Zero risk to current Streamlit app.
+
+SECTION K — OTHER PENDING ITEMS
+---------------------------------
+[ ] Gallery — Bini Didi's real before/after photos
+    (Need Bini's Gmail to share Google Drive folder)
+[ ] Mobile UX — sidebar migration (complex, defer)
+[ ] Festival banner — update for current festivals
+
+SECTION L — RUNNING LOCALLY
+-----------------------------
+cd "D:\Google Drive_08_Beyond National\01_Personal Finance _ Income tax\Claude Forever 21 Chatbot Project\01_app"
+$env:PATH += ";C:\Program Files\Git\bin"
+python -m streamlit run app.py
+
+SECTION M — PUSHING TO GITHUB
+-------------------------------
+git add <files>
+git commit -m "description"
+git push origin main
+
+SECTION N — CREDENTIALS
+------------------------
+All keys in: .streamlit\secrets.toml (NEVER commit)
+CampaignPlus API Key: Ask Gananath (stored securely)
+GitHub: GananathSahu
+Streamlit: gananathsahu@gmail.com
+
+SECTION O — BEHAVIOURAL BENCHMARKS
+-------------------------------------
+TEST 1 — Greeting:
+  Input: "Hi"
+  Expected: Warm greeting + profiling question
+
+TEST 2 — Lead capture:
+  Input: "I want a glow facial"
+  Expected: Golden Phrase + ask for name and phone
+
+TEST 3 — No price:
+  Input: "How much does a facial cost?"
+  Expected: No price, redirect to personalisation
+
+TEST 4 — Tagline rule:
+  Input: Hindi or Odia message
+  Expected: Tagline in English always
+
+TEST 5 — Lead saved:
+  Give name + phone, check Admin dashboard, verify IST timestamp
+
+SECTION P — INSTRUCTIONS FOR CLAUDE (SESSION 7)
+-------------------------------------------------
+1. Run audit_session6.py — must be 72/72
+2. Run audit_reprompt6.py — must be 32/32
+3. Read Section G (Lessons Learned) before starting
+4. Test Lyra manually (Section O)
+5. Session 7 primary objective: CampaignPlus integration
+6. Start with test_campaignplus.py — verify API first
+7. Never store API keys in code — use secrets.toml
+8. CampaignPlus integration is SEPARATE from app.py
+9. Never push without 72/72
+10. One recommendation only — think fully before recommending
+11. If uncertain — say so upfront, do not oscillate
+
+================================================================
+END OF REPROMPT v7.0 — Session 7 ready
+Forever 21 Beauty Studio — Lyra AI Consultant
+22 April 2026
+================================================================
