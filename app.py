@@ -527,12 +527,12 @@ if st.session_state.page == "chat":
             unsafe_allow_html=True
         )
         wa_messages = {
-            "General Enquiry": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.",
-            "Book Appointment": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20book%20an%20appointment.",
-            "Bridal Package": "Namaskar%20Bini%20Didi!%20I%20am%20interested%20in%20a%20Bridal%20Package.",
-            "Hair Treatment": "Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20about%20Hair%20Treatments.",
+            "General Enquiry": "Namaskar%20Bini!%20I%20would%20like%20to%20know%20more%20about%20your%20services.",
+            "Book Appointment": "Namaskar%20Bini!%20I%20would%20like%20to%20book%20an%20appointment.",
+            "Bridal Package": "Namaskar%20Bini!%20I%20am%20interested%20in%20a%20Bridal%20Package.",
+            "Hair Treatment": "Namaskar%20Bini!%20I%20would%20like%20to%20know%20about%20Hair%20Treatments.",
         }
-        wa_choice = st.selectbox("💬 WhatsApp Bini Didi about:",
+        wa_choice = st.selectbox("💬 WhatsApp Bini about:",
                                   list(wa_messages.keys()), key="wa_topic")
         st.markdown(
             f"<a href='https://wa.me/919853115511?text={wa_messages[wa_choice]}' "
@@ -653,7 +653,7 @@ if st.session_state.page == "chat":
 border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem; color:#3a3a3a;'>
 <span style='color:#8B3A62; font-weight:700; font-size:0.88rem;'>🏷️ Special Discounts — 10% Off!</span><br>
 📚 <b>Students</b> &nbsp;|👵 <b>Senior Citizens</b> &nbsp;|⏰ <b>Happy Hours</b> 12–4 PM &nbsp;|💍 <b>Packages</b> &nbsp;|🎉 <b>Special Occasions</b><br>
-<span style='color:#C2185B; font-size:0.78rem;'>Ask Lyra for details or call Bini Didi: +91 98531 15511</span>
+<span style='color:#C2185B; font-size:0.78rem;'>Ask Lyra for details or call Bini: +91 98531 15511</span>
 </div>""", unsafe_allow_html=True)
 
         # compact_welcome — v9.1
@@ -663,7 +663,7 @@ border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem
             "padding:0.5rem 1rem; margin-bottom:0.5rem; font-size:0.88rem;'>"
             "<span style='font-family:Playfair Display,serif; font-weight:700;"
             "color:#8B3A62;'>Namaskar! I'm Lyra 🌸</span>"
-            " &#8212; With Bini Didi, helping you remain "
+            " &#8212; With Bini, helping you remain "
             "<span style='font-family:Playfair Display,serif; font-weight:700;"
             "font-style:italic; color:#C2185B;'>Always Young and Always Beautiful.</span>"
             "</div>",
@@ -724,7 +724,7 @@ border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem
                         st.session_state.lead_saved = True
                         st.markdown(
                             f"<div class='lead-banner'>✅ Thank you, {lead_name}! "
-                            f"Bini Didi will call you at {lead_phone} shortly. 🌸</div>",
+                            f"Bini will call you at {lead_phone} shortly. 🌸</div>",
                             unsafe_allow_html=True
                         )
             st.session_state.messages.append(
@@ -748,7 +748,7 @@ border-radius:10px; padding:0.5rem 1rem; margin-bottom:0.6rem; font-size:0.82rem
                 "The information provided is for general guidance only and may not always "
                 "be complete or fully up to date. For confirmed pricing, appointment "
                 "availability, and personalised recommendations, please speak directly "
-                "with Bini Didi at "
+                "with Bini at "
                 "<a href='tel:+919853115511' style='color:#C2185B;'>+91 98531 15511</a>."
                 "<br><br>"
                 "Your name and phone number shared in this chat are used solely to enable "
@@ -799,7 +799,7 @@ elif st.session_state.page == "gallery":
                 <p>Real transformations at Forever 21 Beauty Studio</p>
             </div>""", unsafe_allow_html=True)
         
-            st.info("📸 Gallery coming soon! Bini Didi is preparing beautiful before & after photos.")
+            st.info("📸 Gallery coming soon! Bini is preparing beautiful before & after photos.")
         
             cats = ["All"] + sorted(set(g["category"] for g in GALLERY_ITEMS))
             filt = st.selectbox("Filter by category", cats)
@@ -844,7 +844,7 @@ elif st.session_state.page == "gallery":
                 "<strong style='color:#8B3A62;'>📋 Disclaimer:</strong> "
                 "Images shown are for illustrative purposes. "
                 "Actual results may vary based on individual skin and hair type. "
-                "Lyra is an AI assistant — for personalised advice please contact Bini Didi.</div>",
+                "Lyra is an AI assistant — for personalised advice please contact Bini.</div>",
                 unsafe_allow_html=True
             )
             st.markdown("""
@@ -853,7 +853,7 @@ elif st.session_state.page == "gallery":
                 <div style='font-family:Playfair Display,serif; font-size:1rem;
                      color:#8B3A62; font-weight:600; margin-bottom:0.4rem;'>
                     Want to see your transformation here? 🌸</div>
-                <a href='https://wa.me/919853115511?text=Namaskar%20Bini%20Didi!%20I%20would%20like%20to%20know%20more%20about%20your%20services.' target='_blank'
+                <a href='https://wa.me/919853115511?text=Namaskar%20Bini!%20I%20would%20like%20to%20know%20more%20about%20your%20services.' target='_blank'
                    style='display:inline-block; background:#25D366; color:white;
                    border-radius:10px; padding:0.5rem 1.2rem; margin-top:0.5rem;
                    text-decoration:none; font-weight:700; font-size:0.85rem;'>
