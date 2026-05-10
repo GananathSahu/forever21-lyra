@@ -162,7 +162,7 @@ def is_valid_indian_mobile(phone: str) -> bool:
     phone = re.sub(r"[\s\-]", "", phone)
     return bool(re.match(r"^[6-9]\d{9}$", phone))
 
-FESTIVAL_BANNER = "👰✨ Hey Brides-to-Be! Jan–Apr slots are filling fast — very few left! Book your Bridal Package now! 💍🌸"
+FESTIVAL_BANNER = "🌸 Sabitri Brata Special — Free Haircut on Thursday + Scratch & Win Your Next Service Free! Chat with Lyra now ✨"
 ADMIN_PASSWORD_HASH = hashlib.sha256("Bini".encode()).hexdigest()
 
 # ── Service data ───────────────────────────────────────────────────────────────
